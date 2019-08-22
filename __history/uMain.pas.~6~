@@ -1,0 +1,242 @@
+unit uMain;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.OleCtrls, SHDocVw,ActiveX,MSHTML,urlmon,
+  strutils,
+  Vcl.ComCtrls, Vcl.ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    Page1: TPageControl;
+    Panel1: TPanel;
+    btnLoad: TButton;
+    Bar1: TStatusBar;
+    ts1: TTabSheet;
+    ts2: TTabSheet;
+    ts3: TTabSheet;
+    ts4: TTabSheet;
+    Web1: TWebBrowser;
+    Web2: TWebBrowser;
+    Memo1: TMemo;
+    Memo2: TMemo;
+    edtUrl: TEdit;
+    TabSheet1: TTabSheet;
+    Memo3: TMemo;
+    btnCopyContent: TButton;
+    btnMerge: TButton;
+    ts6: TTabSheet;
+    Memo4: TMemo;
+    btnMerge2: TButton;
+    TabSheet2: TTabSheet;
+    Web3: TWebBrowser;
+    btnSaveas: TButton;
+    Save1: TSaveDialog;
+    procedure btnLoadClick(Sender: TObject);
+    procedure Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+      const URL: OleVariant);
+    procedure Web1NavigateComplete2(ASender: TObject; const pDisp: IDispatch;
+      const URL: OleVariant);
+    procedure Web2DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+      const URL: OleVariant);
+    procedure btnCopyContentClick(Sender: TObject);
+    procedure btnMergeClick(Sender: TObject);
+    procedure btnMerge2Click(Sender: TObject);
+    procedure btnSaveasClick(Sender: TObject);
+  private
+    { Private declarations }
+
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  mProtocol,mSite,mTitle:string;
+function getPageCode(doc:IHTMLDocument2):tstrings;//返回页面源代码
+function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//返回页面源代码
+function DownloadToFile(Source, Dest: string): Boolean;
+procedure SaveAsPage(doc:IHTMLDocument2;localPageName:string);//页面另存为
+procedure SaveSinglePage(doc:IHTMLDocument2;localPageName:string);//仅仅保存一个页面
+implementation
+
+{$R *.dfm}
+function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//返回页面源代码
+var
+  ms: TMemoryStream;
+  ss:tstrings;
+  content:ihtmlelement;
+begin
+  ss:=tstringlist.Create;
+  content:=(doc.all.item(tag,0) as ihtmlelement);
+  ss.Text:=content.outerHTML;
+  result:=ss;
+end;
+function getPageCode(doc:IHTMLDocument2):tstrings;//返回页面源代码
+var
+  ms: TMemoryStream;
+  ss:tstrings;
+begin
+ ms := TMemoryStream.Create;
+ ss:=tstringlist.Create;
+ (doc as IPersistStreamInit).Save(TStreamAdapter.Create(ms), True);
+ ms.Position := 0;
+ ss.LoadFromStream(ms,TEncoding.UTF8);
+ ms.Free;
+ result:=ss;
+end;
+
+procedure TForm1.btnCopyContentClick(Sender: TObject);
+var
+  doc:IHTMLDocument2;
+begin
+  doc:=web1.Document as IHTMLDocument2; //得到接口；
+  memo3.Lines:=getpagecontent(doc,'article_content');
+  bar1.Panels[0].Text:='加载完毕！';
+  page1.ActivePageIndex:=4;
+end;
+
+procedure TForm1.btnLoadClick(Sender: TObject);
+begin
+  page1.ActivePageIndex:=0;
+  web1.Navigate(edturl.Text);
+  web2.Navigate('C:\tmp\2\csdnmodel.htm');
+end;
+
+procedure TForm1.btnMerge2Click(Sender: TObject);
+var
+  mergefilename:string;
+begin
+  memo2.Lines.Insert(12,memo3.Text);
+  mergefilename:='c:\tmp\2\tmp.htm';
+  memo2.Lines.SaveToFile(mergefilename,tEncoding.UTF8);
+  web3.Navigate(mergefilename);
+end;
+
+procedure TForm1.btnMergeClick(Sender: TObject);
+var
+  doc1,doc2:IHTMLDocument2;
+  ss:tstrings;
+begin
+  doc1:=web1.Document as IHTMLDocument2; //得到接口；
+  ss:=getpagecontent(doc1,'article_content');
+  memo1.Lines:=ss;
+  doc2:=web2.Document as IHTMLDocument2; //得到接口；
+  doc2.body.innerHTML:=ss.Text;
+  //doc2.body.innerHTML:='aa';
+
+  //memo4.Lines.Text:=doc2.all.toString;
+  memo4.Lines:=getpagecode(doc2);
+end;
+
+procedure TForm1.btnSaveasClick(Sender: TObject);
+var
+  filename:string;
+  doc3:IHTMLDocument2;
+begin
+  //DownloadToFile('https://stackedit.io/style.css','C:\tmp\2\style.css');
+  if not Assigned(web3.Document) then Exit;
+  if(save1.Execute())then begin
+    filename:=save1.FileName;
+    save1.InitialDir:=extractfiledir(filename);
+    doc3:=web3.Document as IHTMLDocument2;
+    SaveAsPage(doc3,filename);
+  end;
+end;
+
+procedure TForm1.Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+  const URL: OleVariant);
+var
+  doc:IHTMLDocument2;
+begin
+  //if bDocComplete then exit;
+  //bDocComplete:=true;
+  doc:=web1.Document as IHTMLDocument2; //得到接口；
+  memo1.Lines:=getpagecode(doc);
+  mProtocol:=doc.protocol;
+  mTitle:=doc.title;
+  bar1.Panels[0].Text:='加载完毕！';
+end;
+
+procedure TForm1.Web1NavigateComplete2(ASender: TObject; const pDisp: IDispatch;
+  const URL: OleVariant);
+begin
+  web1.Silent := True;
+end;
+
+procedure TForm1.Web2DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+  const URL: OleVariant);
+var
+  doc:IHTMLDocument2;
+begin
+  doc:=web2.Document as IHTMLDocument2; //得到接口；
+  memo2.Lines:=getpagecode(doc);
+  bar1.Panels[0].Text:='加载完毕！';
+
+end;
+//------------------------------------------页面另存为区------------------------------------------
+procedure SaveAsPage(doc:IHTMLDocument2;localPageName:string);//页面另存为
+Var
+  all:IHTMLElementCollection;
+  sheets:IHTMLstyleSheetsCollection;
+  len,I,p:integer;
+  item:OleVariant;
+  url,newUrl,filename,localfilename,localPageDir,localImageDir,filetag,fileext,num:string;
+  ss:tstrings;
+begin
+  //网页中的图片文件：
+  localPageDir:=extractfiledir(localPageName);
+  localfilename:=extractfilename(localPageName);
+  filetag:=leftstr(localfilename,length(localfilename)-4);
+  localImageDir:=localPageDir+'\images';
+  if(not directoryexists(localImageDir))then forcedirectories(localImageDir);
+  all:=doc.images;
+  len:=all.length;
+  for I:=0 to len-1 do begin
+    item:=all.item(I,varempty);
+    url:=item.src;
+    url:=trim(url);
+    if(length(url)=0)then continue;
+    if(pos('/',url)=1)then url:=mProtocol+mSite+url;
+    num:=inttostr(i);
+    if(length(num)=1)then num:='0'+num;
+    if(url[length(url)-3]='.')then fileext:=rightstr(url,4) else fileext:='.jpg';
+    filename:=filetag+num+fileext;
+    localfilename:=localImageDir+'\'+filename;
+    DownloadToFile(url,localfilename);
+    newUrl:='images/'+filename;
+    item.src:=newUrl;
+  end;
+  //ss:=tstringlist.Create;
+  //ss.Text:=doc.body.outerHTML;
+  //ss.SaveToFile(localpagename,TEncoding.UTF8);
+  //ss.Free;
+  SaveSinglePage(doc,localpagename);
+end;
+procedure SaveSinglePage(doc:IHTMLDocument2;localPageName:string);//仅仅保存一个页面
+var
+  ms: TMemoryStream;
+  ss:tstrings;
+begin
+ ms := TMemoryStream.Create;
+ ss:=tstringlist.Create;
+ (doc as IPersistStreamInit).Save(TStreamAdapter.Create(ms), True);
+ ms.Position := 0;
+ ss.LoadFromStream(ms,TEncoding.UTF8);
+ ss.SaveToFile(localPageName,TEncoding.UTF8);
+ ms.Free;
+ ss.Free;
+end;
+//------------------------------------------公共函数区----------------------------------------------
+//uses urlmon;
+function DownloadToFile(Source, Dest: string): Boolean;
+begin
+  try
+    Result := UrlDownloadToFile(nil, PChar(source), PChar(Dest), 0, nil) = 0;
+  except
+    Result := False;
+  end;
+end;
+end.

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tomcat下载以及安装、eclipse工具配置tomcat9的具体步骤以及注意事项！！！</title>
+  
+</head>
+
+<body class="stackedit">
+
+
+<DIV style="OVERFLOW: hidden" id=article_content class="article_content clearfix"><DIV class=article-copyright><SPAN class=creativecommons><A href="http://creativecommons.org/licenses/by-sa/4.0/" rel=license></A><SPAN>版权声明：本文为博主原创文章，遵循<A href="http://creativecommons.org/licenses/by-sa/4.0/" target=_blank> CC 4.0 by-sa </A>版权协议，转载请附上原文出处链接和本声明。 </SPAN>
+<DIV class=article-source-link2222>本文链接：<A href="https://blog.csdn.net/xixiyingyi/article/details/75434334">https://blog.csdn.net/xixiyingyi/article/details/75434334</A> </DIV></SPAN></DIV><LINK rel=stylesheet href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css">
+<DIV id=content_views class="markdown_views prism-atom-one-dark" jQuery191006206546178099248="15"><!-- flowchart 箭头图标 勿删 --><?XML:NAMESPACE PREFIX = [default] http://www.w3.org/2000/svg NS = "http://www.w3.org/2000/svg" /><svg style="DISPLAY: none" xmlns="http://www.w3.org/2000/svg"><path style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0)" id=raphael-marker-block d="M5,0 0,2.5 5,5z" stroke-linecap="round"></path></svg>
+<H2 id=eclipse下创建maven-spring-mvc-项目全步骤>eclipse下创建maven spring MVC 项目全步骤</H2>
+<P>因为之前学习的需要导致经常接触到maven依赖管理，但是一直都没有认真记录下整个框架的搭建，这段时间突然重新去搭建整个框架出现了一堆问题，所以特写下这篇笔记加强学习。废话不多说，下面一步步来搭建最简单的 maven + spring MVC 项目。</P>
+<H2 id=一创建maven项目>一）创建maven项目</H2>
+<OL>
+<LI>
+<P>创建准备工作 <BR>-eclipse （本人使用的是Neon.3 Release (4.6.3)版本，此版本用使用jdk 1.8） <BR>-jdk1.8.0_101 <BR>-maven-3.5.0 <BR>上面这些不要求一样，其他版本大致也是一样的。</P>
+<LI>
+<P>新建maven项目 <BR><STRONG>1</STRONG>、打开eclipse New Project ，这里我们选择创建maven项目<IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719210525554?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<P><STRONG>！但是这里可能会遇到一个问题，就是我们的eclipse里面没有maven项目这个选项…，因为有些比较旧的版本可能需要我们手动在eclipse中安装maven</STRONG> <BR>遇到这种情况有两种安装方法 <BR>一、在线安装：Help –&gt; Install New Software然后输入 HTTP 地址（<A href="http://m2eclipse.sonatype.org/sites/m2e" rel=nofollow data-token="f6853ac10d1955a57f41a442b418ac84">http://m2eclipse.sonatype.org/sites/m2e</A>）来安装，但是这个真的很慢啊~~。 <BR>二、离线安装：下载eclipse maven 插件，然后解压后把文件拷贝到eclipse的安装目录下的dropins即可，然后重启eclipse</P>
+<P>我们继续走~</P>
+<P><STRONG>2</STRONG>、第一步选择完maven project后，我们选择next，然后继续next（这些我们选择默认就好），直到这步 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719212118945?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR>因为我们是要创建一个web项目，所以我们选择maven-archetype-webapp，然后next</P>
+<P><STRONG>3</STRONG>. 接下来这步最重要的就是输入Group Id和Archetype Id <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719213346524?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR>填完后点击finish。</P>
+<P><STRONG>4</STRONG>. 创建完的maven项目大概如下图结构（可能存在差异，但是并没什么关系） <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719213724711?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR>注意：这里会出现报错的情况，但是没关系，只是因为JSP需要servlet的Jar包 <BR>我们选择最后那个pom.xml，双击打开，然后加入servlet 3.1的依赖坐标保存即可 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719214337509?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<P><STRONG>5</STRONG>. 将项目修改成web项目，并且修改一下web的版本，因为eclipse默认为我们创建的2.3版本，但是这个版本比较老了，而且2.3版本默认是不支持el表达式的。首先修改build path 和 Java compiler <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719223943846?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<P>然后选择项目右击，选择properties <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719215644307?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P></LI></OL>
+<P>这里大家可能会遇到一个问题，就是这样</P>
+<P><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719215811239?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR>web module 选择了3.1然后apply不了。这里教大家一个方法，先将java选择1.7或者1.8（个人使用的是1.8），然后将web module这个选项的√去掉，然后apply，然后再选择3.1，再将这个选项的√打上，就可以保存了。</P>
+<P>还有一个问题，就是选择3.1和1.8以后会有这个选择 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719220411403?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719220450316?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<P>最后点击ok完成即可</P>
+<P><STRONG>6</STRONG>. 完善maven目录结构，完善的maven目录结构应该有 src/main/java 、 src/main/resources 、src/test/java，我们只需要新创建没有的就可以了</P>
+<P><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719221153474?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<P>这里可能出行新增不了目录的情况，有两种解决方法 <BR>一、点击Navigator，然后创建对应的目录，完成后返回project Explorer，选择项目右击，选择maven -&gt; update project 即可出现对应的目录结构 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719224730408?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<P>二、选择项目，然后右击，选择properties -&gt;java build path -&gt; source ， 删除还没有的目录，回去创建目录即可 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719225236451?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<P><STRONG>7.</STRONG>修改web.xml版本和删除WebContext文件夹，因为我们将web修改为了3.1，所以我们需要将web.xml内容进行修改，并且我们创建的是maven项目，使用WebContext是不需要的，我们将其删除即可 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719230442383?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719232846871?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR>3.1 web.xml内容我们可以在自己的tomcat安装目录里面的conf里面的web.xml里面找到或者WebContext 里面的web.xml。</P>
+<P><STRONG>8.</STRONG>修改Deployment Assembly 属性，删除部署时不需要包含的目录，最后maven -&gt; update project即可 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719231659031?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<P>注意如果出现：Dynamic Web Module 3.1 requires Java 1.7 or newer这个错误，有下面几个解决方法 <BR>1. 在eclipse 构建 web中关于java版本有三处需要修改统一。 <BR>（1）在 Java Build Path的libraries中修改 <BR>（2）在Java Compiler 中修改 <BR>（3）在Project Facet中修改 <BR>2.maven项目总会意外的：） <BR>在pom.xml加上 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719232306103?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<HR>
+
+<P>到此时，第一步maven目录和配置就完成啦 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170719232952293?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<HR>
+
+<H2 id=二搭建spring-mvc项目>二）搭建spring mvc项目</H2>
+<OL>
+<LI>
+<P>添加spring mvc 的相关依赖包 <BR>包括（spring相关依赖版本为：4.1.6.RELEASE）spring-core、spring-context、spring-beans、spring-web、spring-webmvc、spring-aop、commons-logging（1.2版本） <BR>打开项目的pom文件，然后添加相关依赖的名称和坐标以及版本即可 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170724133859177?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<LI>
+<P>修改web.xml文件，加载spring mvc 的控制器 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170724150901059?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<LI>
+<P>创建和配置spring-web.xml文件 <BR>.在对应web.xml里面配置的路径创建spring-web.xml文件 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170724142320020?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR>.打开新建的spring-web.xml，修改配置（头部的约束文件可以在spring的官方文档里面找到） <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170724143133412?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<LI>
+<P>创建对应的测试controller和jsp <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170724151138763?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR>对应的jsp <BR><IMG title="" alt=jsp src="https://img-blog.csdn.net/20170724151313169?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR>对应的controller <BR><IMG title="" alt=controller src="https://img-blog.csdn.net/20170724151410030?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P></LI></OL>
+<HR>
+
+<H2 id=三测试>三）测试</H2>
+<P>这里我使用jetty继续测试，在pom文件里面添加jetty的eclipse插件 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170724151642838?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<P>然后选择项目，右击选择Run As,选择maven build，输入jetty:run，最后点击run即可 <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170724152352116?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"></P>
+<HR>
+
+<P>打开浏览器输入<A href="http://localhost:8080/hello" rel=nofollow data-token="ef1bc662d9475be1d11c1ab742bfb14c">http://localhost:8080/hello</A> <BR><IMG title="" alt=这里写图片描述 src="https://img-blog.csdn.net/20170724152852609?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGl4aXlpbmd5aQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast"> <BR>正常输出我们制定的页面和信息~~~，到这里我们就搭建好了maven spring MVC 项目 。</P>
+<HR>
+
+<P>注：这是最基础的maven + spring mvc 项目，实际的项目还需要配置其它，例如事务，以及和其它框架的整合。</P></DIV><LINK rel=stylesheet href="https://csdnimg.cn/release/phoenix/mdeditor/markdown_views-e44c3c0e64.css"></DIV>
+
+</body>
+
+</html>
