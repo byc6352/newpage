@@ -75,7 +75,6 @@ procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
 implementation
 
 {$R *.dfm}
-//从内存中加载页面（比加载htm文件速度快）
 procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
 var
    ms:  TMemoryStream;
@@ -96,7 +95,53 @@ begin
        end;
    end;
 end;
+procedure  WB_LoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  string);
 
+var
+
+   sl:  TStringList;
+
+   ms:  TMemoryStream;
+
+begin
+
+   WebBrowser.Navigate('about:blank');
+
+   if  Assigned(WebBrowser.Document)  then
+
+   begin
+
+       sl  :=  TStringList.Create;
+
+       try
+
+           ms  :=  TMemoryStream.Create;
+
+           try
+
+               sl.Text  :=  HTMLCode;
+
+               sl.SaveToStream(ms);
+
+               ms.Seek(0,  0);
+
+               (WebBrowser.Document  as  IPersistStreamInit).Load(TStreamAdapter.Create(ms));
+
+              finally
+
+               ms.Free;
+
+           end;
+
+       finally
+
+           sl.Free;
+
+       end;
+
+   end;
+
+end;
 function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//返回页面源代码
 var
   ms: TMemoryStream;
@@ -315,53 +360,6 @@ begin
   except
     Result := False;
   end;
-end;
-procedure  WB_LoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  string);
-
-var
-
-   sl:  TStringList;
-
-   ms:  TMemoryStream;
-
-begin
-
-   WebBrowser.Navigate('about:blank');
-
-   if  Assigned(WebBrowser.Document)  then
-
-   begin
-
-       sl  :=  TStringList.Create;
-
-       try
-
-           ms  :=  TMemoryStream.Create;
-
-           try
-
-               sl.Text  :=  HTMLCode;
-
-               sl.SaveToStream(ms);
-
-               ms.Seek(0,  0);
-
-               (WebBrowser.Document  as  IPersistStreamInit).Load(TStreamAdapter.Create(ms));
-
-              finally
-
-               ms.Free;
-
-           end;
-
-       finally
-
-           sl.Free;
-
-       end;
-
-   end;
-
 end;
 procedure init();
 var
