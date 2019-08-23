@@ -55,6 +55,7 @@ type
     procedure btnSaveClick(Sender: TObject);
     procedure web4DocumentComplete(ASender: TObject; const pDisp: IDispatch;
       const URL: OleVariant);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
 
@@ -75,18 +76,19 @@ procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
 implementation
 
 {$R *.dfm}
-//从内存中加载页面（比加载htm文件速度快）
+//从内存中加载页面（比加载htm文件速度快）uses ActiveX;
 procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
 var
    ms:  TMemoryStream;
 begin
-   WebBrowser.Navigate('about:blank');
+   if  not Assigned(WebBrowser.Document)  then
+      WebBrowser.Navigate('about:blank');
    if  Assigned(WebBrowser.Document)  then
    begin
        try
            ms  :=  TMemoryStream.Create;
            try
-               HTMLCode.SaveToStream(ms);
+               HTMLCode.SaveToStream(ms,tEncoding.UTF8);
                ms.Seek(0,  0);
                (WebBrowser.Document  as  IPersistStreamInit).Load(TStreamAdapter.Create(ms));
                finally
@@ -200,6 +202,11 @@ begin
   web4.Navigate(mPage);
 end;
 
+procedure TfMain.FormShow(Sender: TObject);
+begin
+  web2.Navigate(mModelPage);
+end;
+
 procedure TfMain.Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;
   const URL: OleVariant);
 var
@@ -215,7 +222,7 @@ begin
   mCharset:=doc.charset;
   if(mProtocol='HyperText Transfer Protocol with Privacy')then mProtocol:='https://' else mProtocol:='http://';
   bar1.Panels[0].Text:='远程页面加载完毕！';
-  page1.ActivePageIndex:=1;
+  //page1.ActivePageIndex:=1;
 end;
 
 procedure TfMain.Web1NavigateComplete2(ASender: TObject; const pDisp: IDispatch;

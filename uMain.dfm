@@ -11,6 +11,7 @@
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Page1: TPageControl
@@ -18,7 +19,7 @@
     Top = 41
     Width = 846
     Height = 741
-    ActivePage = ts4
+    ActivePage = ts0
     Align = alClient
     TabOrder = 0
     object ts0: TTabSheet

@@ -34,7 +34,7 @@ type
     Web3: TWebBrowser;
     btnSaveas: TButton;
     Save1: TSaveDialog;
-    æœ¬åœ°å†…å®¹: TTabSheet;
+    ±¾µØÄÚÈİ: TTabSheet;
     Memo5: TMemo;
     web4: TWebBrowser;
     btnSave: TButton;
@@ -55,6 +55,7 @@ type
     procedure btnSaveClick(Sender: TObject);
     procedure web4DocumentComplete(ASender: TObject; const pDisp: IDispatch;
       const URL: OleVariant);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
 
@@ -65,22 +66,23 @@ type
 var
   fMain: TfMain;
   mProtocol,mSite,mTitle,mCharset,mPage,mWorkDir,mModelPage:string;
-function getPageCode(doc:IHTMLDocument2):tstrings;//è¿”å›é¡µé¢æºä»£ç 
-function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//è¿”å›é¡µé¢æºä»£ç 
+function getPageCode(doc:IHTMLDocument2):tstrings;//·µ»ØÒ³ÃæÔ´´úÂë
+function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//·µ»ØÒ³ÃæÔ´´úÂë
 function DownloadToFile(Source, Dest: string): Boolean;
-procedure SaveAsPage(doc:IHTMLDocument2;localPageName:string);//é¡µé¢å¦å­˜ä¸º
-procedure SaveSinglePage(doc:IHTMLDocument2;localPageName:string);//ä»…ä»…ä¿å­˜ä¸€ä¸ªé¡µé¢
-procedure  WB_LoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  string);//å°† HTML ä»£ç ç›´æ¥åŠ å…¥åˆ° TWebbrowser ç»„ä»¶ä¸­å»
+procedure SaveAsPage(doc:IHTMLDocument2;localPageName:string);//Ò³ÃæÁí´æÎª
+procedure SaveSinglePage(doc:IHTMLDocument2;localPageName:string);//½ö½ö±£´æÒ»¸öÒ³Ãæ
+procedure  WB_LoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  string);//½« HTML ´úÂëÖ±½Ó¼ÓÈëµ½ TWebbrowser ×é¼şÖĞÈ¥
 procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
 implementation
 
 {$R *.dfm}
-//ä»å†…å­˜ä¸­åŠ è½½é¡µé¢ï¼ˆæ¯”åŠ è½½htmæ–‡ä»¶é€Ÿåº¦å¿«ï¼‰
+//´ÓÄÚ´æÖĞ¼ÓÔØÒ³Ãæ£¨±È¼ÓÔØhtmÎÄ¼şËÙ¶È¿ì£©uses ActiveX;
 procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
 var
    ms:  TMemoryStream;
 begin
-   WebBrowser.Navigate('about:blank');
+   if  not Assigned(WebBrowser.Document)  then
+      WebBrowser.Navigate('about:blank');
    if  Assigned(WebBrowser.Document)  then
    begin
        try
@@ -97,7 +99,7 @@ begin
    end;
 end;
 
-function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//è¿”å›é¡µé¢æºä»£ç 
+function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//·µ»ØÒ³ÃæÔ´´úÂë
 var
   ms: TMemoryStream;
   ss:tstrings;
@@ -109,7 +111,7 @@ begin
   ss.Text:=content.outerHTML;
   result:=ss;
 end;
-function getPageCode(doc:IHTMLDocument2):tstrings;//è¿”å›é¡µé¢æºä»£ç 
+function getPageCode(doc:IHTMLDocument2):tstrings;//·µ»ØÒ³ÃæÔ´´úÂë
 var
   ms: TMemoryStream;
   ss:tstrings;
@@ -127,9 +129,9 @@ procedure TfMain.btnCopyContentClick(Sender: TObject);
 var
   doc:IHTMLDocument2;
 begin
-  doc:=web1.Document as IHTMLDocument2; //å¾—åˆ°æ¥å£ï¼›
+  doc:=web1.Document as IHTMLDocument2; //µÃµ½½Ó¿Ú£»
   memo3.Lines:=getpagecontent(doc,'article_content');
-  bar1.Panels[0].Text:='åŠ è½½å®Œæ¯•ï¼';
+  bar1.Panels[0].Text:='¼ÓÔØÍê±Ï£¡';
   page1.ActivePageIndex:=4;
 end;
 
@@ -137,7 +139,7 @@ procedure TfMain.btnLoadClick(Sender: TObject);
 begin
   page1.ActivePageIndex:=0;
   web1.Navigate(edturl.Text);
-  bar1.Panels[0].Text:='æ­£åœ¨åŠ è½½é¡µé¢...';
+  bar1.Panels[0].Text:='ÕıÔÚ¼ÓÔØÒ³Ãæ...';
   web2.Navigate(mModelPage);
   //web2.Navigate(memo2.Lines.Text);
 end;
@@ -147,10 +149,10 @@ var
   mergefilename:string;
 begin
   memo4.Lines:=memo2.Lines;
-  memo4.Lines.Insert(12,memo3.Text);
+  memo4.Lines.Insert(11,memo3.Text);
   mergefilename:=mWorkDir+'\tmp.htm';
   memo4.Lines.SaveToFile(mergefilename,tEncoding.UTF8);
-  bar1.Panels[0].Text:='æ­£åœ¨åŠ è½½åˆæˆé¡µé¢...';
+  bar1.Panels[0].Text:='ÕıÔÚ¼ÓÔØºÏ³ÉÒ³Ãæ...';
   page1.ActivePageIndex:=6;
   //web3.Navigate(mergefilename);
   wbloadhtml(web3,memo4.Lines);
@@ -161,10 +163,10 @@ var
   doc1,doc2:IHTMLDocument2;
   ss:tstrings;
 begin
-  doc1:=web1.Document as IHTMLDocument2; //å¾—åˆ°æ¥å£ï¼›
+  doc1:=web1.Document as IHTMLDocument2; //µÃµ½½Ó¿Ú£»
   ss:=getpagecontent(doc1,'article_content');
   memo1.Lines:=ss;
-  doc2:=web2.Document as IHTMLDocument2; //å¾—åˆ°æ¥å£ï¼›
+  doc2:=web2.Document as IHTMLDocument2; //µÃµ½½Ó¿Ú£»
   doc2.body.innerHTML:=ss.Text;
   //doc2.body.innerHTML:='aa';
 
@@ -195,9 +197,14 @@ end;
 procedure TfMain.btnSaveClick(Sender: TObject);
 begin
   page1.ActivePageIndex:=8;
-  bar1.Panels[0].Text:='æ­£åœ¨åŠ è½½æœ¬åœ°é¡µé¢...ï¼';
+  bar1.Panels[0].Text:='ÕıÔÚ¼ÓÔØ±¾µØÒ³Ãæ...£¡';
   memo5.Lines.SaveToFile(mPage,tEncoding.UTF8);
   web4.Navigate(mPage);
+end;
+
+procedure TfMain.FormShow(Sender: TObject);
+begin
+  web2.Navigate(mModelPage);
 end;
 
 procedure TfMain.Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;
@@ -207,15 +214,15 @@ var
 begin
   //if bDocComplete then exit;
   //bDocComplete:=true;
-  doc:=web1.Document as IHTMLDocument2; //å¾—åˆ°æ¥å£ï¼›
+  doc:=web1.Document as IHTMLDocument2; //µÃµ½½Ó¿Ú£»
   memo1.Lines:=getpagecode(doc);
   mProtocol:=doc.protocol;
   mTitle:=doc.title;
   mSite:=doc.domain;
   mCharset:=doc.charset;
   if(mProtocol='HyperText Transfer Protocol with Privacy')then mProtocol:='https://' else mProtocol:='http://';
-  bar1.Panels[0].Text:='è¿œç¨‹é¡µé¢åŠ è½½å®Œæ¯•ï¼';
-  page1.ActivePageIndex:=1;
+  bar1.Panels[0].Text:='Ô¶³ÌÒ³Ãæ¼ÓÔØÍê±Ï£¡';
+  //page1.ActivePageIndex:=1;
 end;
 
 procedure TfMain.Web1NavigateComplete2(ASender: TObject; const pDisp: IDispatch;
@@ -229,9 +236,9 @@ procedure TfMain.Web2DocumentComplete(ASender: TObject; const pDisp: IDispatch;
 var
   doc:IHTMLDocument2;
 begin
-  doc:=web2.Document as IHTMLDocument2; //å¾—åˆ°æ¥å£ï¼›
+  doc:=web2.Document as IHTMLDocument2; //µÃµ½½Ó¿Ú£»
   memo2.Lines:=getpagecode(doc);
-  bar1.Panels[0].Text:='æ¨¡æ¿é¡µé¢åŠ è½½å®Œæ¯•ï¼';
+  bar1.Panels[0].Text:='Ä£°åÒ³Ãæ¼ÓÔØÍê±Ï£¡';
 
 end;
 procedure TfMain.Web3DocumentComplete(ASender: TObject; const pDisp: IDispatch;
@@ -239,19 +246,19 @@ procedure TfMain.Web3DocumentComplete(ASender: TObject; const pDisp: IDispatch;
 var
   doc:IHTMLDocument2;
 begin
-  doc:=web3.Document as IHTMLDocument2; //å¾—åˆ°æ¥å£ï¼›
+  doc:=web3.Document as IHTMLDocument2; //µÃµ½½Ó¿Ú£»
   doc.title:=mTitle;
-  bar1.Panels[0].Text:='åˆæˆé¡µé¢åŠ è½½å®Œæ¯•ï¼';
+  bar1.Panels[0].Text:='ºÏ³ÉÒ³Ãæ¼ÓÔØÍê±Ï£¡';
 end;
 
 procedure TfMain.web4DocumentComplete(ASender: TObject; const pDisp: IDispatch;
   const URL: OleVariant);
 begin
-   bar1.Panels[0].Text:='æœ¬åœ°é¡µé¢åŠ è½½å®Œæ¯•ï¼';
+   bar1.Panels[0].Text:='±¾µØÒ³Ãæ¼ÓÔØÍê±Ï£¡';
 end;
 
-//------------------------------------------é¡µé¢å¦å­˜ä¸ºåŒº------------------------------------------
-procedure SaveAsPage(doc:IHTMLDocument2;localPageName:string);//é¡µé¢å¦å­˜ä¸º
+//------------------------------------------Ò³ÃæÁí´æÎªÇø------------------------------------------
+procedure SaveAsPage(doc:IHTMLDocument2;localPageName:string);//Ò³ÃæÁí´æÎª
 Var
   all:IHTMLElementCollection;
   sheets:IHTMLstyleSheetsCollection;
@@ -260,7 +267,7 @@ Var
   url,newUrl,filename,localfilename,localPageDir,localImageDir,filetag,fileext,num:string;
   ss:tstrings;
 begin
-  //ç½‘é¡µä¸­çš„å›¾ç‰‡æ–‡ä»¶ï¼š
+  //ÍøÒ³ÖĞµÄÍ¼Æ¬ÎÄ¼ş£º
   localPageDir:=extractfiledir(localPageName);
   localfilename:=extractfilename(localPageName);
   filetag:=leftstr(localfilename,length(localfilename)-4);
@@ -292,7 +299,7 @@ begin
   //SaveSinglePage(doc,localpagename);
   //fmain.memo4.Lines:=getPagecode(doc);
 end;
-procedure SaveSinglePage(doc:IHTMLDocument2;localPageName:string);//ä»…ä»…ä¿å­˜ä¸€ä¸ªé¡µé¢
+procedure SaveSinglePage(doc:IHTMLDocument2;localPageName:string);//½ö½ö±£´æÒ»¸öÒ³Ãæ
 var
   ms: TMemoryStream;
   ss:tstrings;
@@ -306,7 +313,7 @@ begin
  ms.Free;
  ss.Free;
 end;
-//------------------------------------------å…¬å…±å‡½æ•°åŒº----------------------------------------------
+//------------------------------------------¹«¹²º¯ÊıÇø----------------------------------------------
 //uses urlmon;
 function DownloadToFile(Source, Dest: string): Boolean;
 begin

@@ -9,31 +9,36 @@ uses
   Vcl.ComCtrls, Vcl.ExtCtrls;
 
 type
-  TForm1 = class(TForm)
+  TfMain = class(TForm)
     Page1: TPageControl;
     Panel1: TPanel;
     btnLoad: TButton;
     Bar1: TStatusBar;
+    ts0: TTabSheet;
     ts1: TTabSheet;
     ts2: TTabSheet;
     ts3: TTabSheet;
-    ts4: TTabSheet;
     Web1: TWebBrowser;
     Web2: TWebBrowser;
     Memo1: TMemo;
     Memo2: TMemo;
     edtUrl: TEdit;
-    TabSheet1: TTabSheet;
+    ts4: TTabSheet;
     Memo3: TMemo;
     btnCopyContent: TButton;
     btnMerge: TButton;
-    ts6: TTabSheet;
+    ts5: TTabSheet;
     Memo4: TMemo;
     btnMerge2: TButton;
-    TabSheet2: TTabSheet;
+    ts6: TTabSheet;
     Web3: TWebBrowser;
     btnSaveas: TButton;
     Save1: TSaveDialog;
+    本地内容: TTabSheet;
+    Memo5: TMemo;
+    web4: TWebBrowser;
+    btnSave: TButton;
+    ts8: TTabSheet;
     procedure btnLoadClick(Sender: TObject);
     procedure Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;
       const URL: OleVariant);
@@ -45,6 +50,11 @@ type
     procedure btnMergeClick(Sender: TObject);
     procedure btnMerge2Click(Sender: TObject);
     procedure btnSaveasClick(Sender: TObject);
+    procedure Web3DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+      const URL: OleVariant);
+    procedure btnSaveClick(Sender: TObject);
+    procedure web4DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+      const URL: OleVariant);
   private
     { Private declarations }
 
@@ -53,16 +63,40 @@ type
   end;
 
 var
-  Form1: TForm1;
-  mProtocol,mSite,mTitle:string;
+  fMain: TfMain;
+  mProtocol,mSite,mTitle,mCharset,mPage,mWorkDir,mModelPage:string;
 function getPageCode(doc:IHTMLDocument2):tstrings;//返回页面源代码
 function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//返回页面源代码
 function DownloadToFile(Source, Dest: string): Boolean;
 procedure SaveAsPage(doc:IHTMLDocument2;localPageName:string);//页面另存为
 procedure SaveSinglePage(doc:IHTMLDocument2;localPageName:string);//仅仅保存一个页面
+procedure  WB_LoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  string);//将 HTML 代码直接加入到 TWebbrowser 组件中去
+procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
 implementation
 
 {$R *.dfm}
+//从内存中加载页面（比加载htm文件速度快）
+procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
+var
+   ms:  TMemoryStream;
+begin
+   WebBrowser.Navigate('about:blank');
+   if  Assigned(WebBrowser.Document)  then
+   begin
+       try
+           ms  :=  TMemoryStream.Create;
+           try
+               HTMLCode.SaveToStream(ms);
+               ms.Seek(0,  0);
+               (WebBrowser.Document  as  IPersistStreamInit).Load(TStreamAdapter.Create(ms));
+               finally
+               ms.Free;
+           end;
+       finally
+       end;
+   end;
+end;
+
 function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//返回页面源代码
 var
   ms: TMemoryStream;
@@ -71,6 +105,7 @@ var
 begin
   ss:=tstringlist.Create;
   content:=(doc.all.item(tag,0) as ihtmlelement);
+  content.style.removeAttribute('HEIGHT',0);
   ss.Text:=content.outerHTML;
   result:=ss;
 end;
@@ -88,7 +123,7 @@ begin
  result:=ss;
 end;
 
-procedure TForm1.btnCopyContentClick(Sender: TObject);
+procedure TfMain.btnCopyContentClick(Sender: TObject);
 var
   doc:IHTMLDocument2;
 begin
@@ -98,24 +133,30 @@ begin
   page1.ActivePageIndex:=4;
 end;
 
-procedure TForm1.btnLoadClick(Sender: TObject);
+procedure TfMain.btnLoadClick(Sender: TObject);
 begin
   page1.ActivePageIndex:=0;
   web1.Navigate(edturl.Text);
-  web2.Navigate('C:\tmp\2\csdnmodel.htm');
+  bar1.Panels[0].Text:='正在加载页面...';
+  web2.Navigate(mModelPage);
+  //web2.Navigate(memo2.Lines.Text);
 end;
 
-procedure TForm1.btnMerge2Click(Sender: TObject);
+procedure TfMain.btnMerge2Click(Sender: TObject);
 var
   mergefilename:string;
 begin
-  memo2.Lines.Insert(12,memo3.Text);
-  mergefilename:='c:\tmp\2\tmp.htm';
-  memo2.Lines.SaveToFile(mergefilename,tEncoding.UTF8);
-  web3.Navigate(mergefilename);
+  memo4.Lines:=memo2.Lines;
+  memo4.Lines.Insert(12,memo3.Text);
+  mergefilename:=mWorkDir+'\tmp.htm';
+  memo4.Lines.SaveToFile(mergefilename,tEncoding.UTF8);
+  bar1.Panels[0].Text:='正在加载合成页面...';
+  page1.ActivePageIndex:=6;
+  //web3.Navigate(mergefilename);
+  wbloadhtml(web3,memo4.Lines);
 end;
 
-procedure TForm1.btnMergeClick(Sender: TObject);
+procedure TfMain.btnMergeClick(Sender: TObject);
 var
   doc1,doc2:IHTMLDocument2;
   ss:tstrings;
@@ -131,7 +172,7 @@ begin
   memo4.Lines:=getpagecode(doc2);
 end;
 
-procedure TForm1.btnSaveasClick(Sender: TObject);
+procedure TfMain.btnSaveasClick(Sender: TObject);
 var
   filename:string;
   doc3:IHTMLDocument2;
@@ -143,10 +184,23 @@ begin
     save1.InitialDir:=extractfiledir(filename);
     doc3:=web3.Document as IHTMLDocument2;
     SaveAsPage(doc3,filename);
+    fmain.memo5.Lines.Text:=fmain.web3.OleObject.Document.all.tags('HTML').Item(0).outerHTML;
+    memo5.Lines.SaveToFile(filename,tEncoding.UTF8);
+    page1.ActivePageIndex:=8;
+    web4.Navigate(filename);
+    mPage:=filename;
   end;
 end;
 
-procedure TForm1.Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+procedure TfMain.btnSaveClick(Sender: TObject);
+begin
+  page1.ActivePageIndex:=8;
+  bar1.Panels[0].Text:='正在加载本地页面...！';
+  memo5.Lines.SaveToFile(mPage,tEncoding.UTF8);
+  web4.Navigate(mPage);
+end;
+
+procedure TfMain.Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;
   const URL: OleVariant);
 var
   doc:IHTMLDocument2;
@@ -157,25 +211,45 @@ begin
   memo1.Lines:=getpagecode(doc);
   mProtocol:=doc.protocol;
   mTitle:=doc.title;
-  bar1.Panels[0].Text:='加载完毕！';
+  mSite:=doc.domain;
+  mCharset:=doc.charset;
+  if(mProtocol='HyperText Transfer Protocol with Privacy')then mProtocol:='https://' else mProtocol:='http://';
+  bar1.Panels[0].Text:='远程页面加载完毕！';
+  page1.ActivePageIndex:=1;
 end;
 
-procedure TForm1.Web1NavigateComplete2(ASender: TObject; const pDisp: IDispatch;
+procedure TfMain.Web1NavigateComplete2(ASender: TObject; const pDisp: IDispatch;
   const URL: OleVariant);
 begin
   web1.Silent := True;
 end;
 
-procedure TForm1.Web2DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+procedure TfMain.Web2DocumentComplete(ASender: TObject; const pDisp: IDispatch;
   const URL: OleVariant);
 var
   doc:IHTMLDocument2;
 begin
   doc:=web2.Document as IHTMLDocument2; //得到接口；
   memo2.Lines:=getpagecode(doc);
-  bar1.Panels[0].Text:='加载完毕！';
+  bar1.Panels[0].Text:='模板页面加载完毕！';
 
 end;
+procedure TfMain.Web3DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+  const URL: OleVariant);
+var
+  doc:IHTMLDocument2;
+begin
+  doc:=web3.Document as IHTMLDocument2; //得到接口；
+  doc.title:=mTitle;
+  bar1.Panels[0].Text:='合成页面加载完毕！';
+end;
+
+procedure TfMain.web4DocumentComplete(ASender: TObject; const pDisp: IDispatch;
+  const URL: OleVariant);
+begin
+   bar1.Panels[0].Text:='本地页面加载完毕！';
+end;
+
 //------------------------------------------页面另存为区------------------------------------------
 procedure SaveAsPage(doc:IHTMLDocument2;localPageName:string);//页面另存为
 Var
@@ -200,6 +274,8 @@ begin
     url:=trim(url);
     if(length(url)=0)then continue;
     if(pos('/',url)=1)then url:=mProtocol+mSite+url;
+    //replacestr(url,'file://',mProtocol);
+    if(leftstr(url,7)='file://')then url:=replacestr(url,'file://',mProtocol);
     num:=inttostr(i);
     if(length(num)=1)then num:='0'+num;
     if(url[length(url)-3]='.')then fileext:=rightstr(url,4) else fileext:='.jpg';
@@ -213,7 +289,8 @@ begin
   //ss.Text:=doc.body.outerHTML;
   //ss.SaveToFile(localpagename,TEncoding.UTF8);
   //ss.Free;
-  SaveSinglePage(doc,localpagename);
+  //SaveSinglePage(doc,localpagename);
+  //fmain.memo4.Lines:=getPagecode(doc);
 end;
 procedure SaveSinglePage(doc:IHTMLDocument2;localPageName:string);//仅仅保存一个页面
 var
@@ -239,4 +316,64 @@ begin
     Result := False;
   end;
 end;
+procedure  WB_LoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  string);
+
+var
+
+   sl:  TStringList;
+
+   ms:  TMemoryStream;
+
+begin
+
+   WebBrowser.Navigate('about:blank');
+
+   if  Assigned(WebBrowser.Document)  then
+
+   begin
+
+       sl  :=  TStringList.Create;
+
+       try
+
+           ms  :=  TMemoryStream.Create;
+
+           try
+
+               sl.Text  :=  HTMLCode;
+
+               sl.SaveToStream(ms);
+
+               ms.Seek(0,  0);
+
+               (WebBrowser.Document  as  IPersistStreamInit).Load(TStreamAdapter.Create(ms));
+
+              finally
+
+               ms.Free;
+
+           end;
+
+       finally
+
+           sl.Free;
+
+       end;
+
+   end;
+
+end;
+procedure init();
+var
+  filename:string;
+begin
+  filename:=application.ExeName;
+  mWorkDir:=extractfiledir(filename);
+  mModelPage:=mWorkDir+'\csdnmodel.htm';
+end;
+initialization
+  OleInitialize(nil);
+  init();
+finalization
+  OleUninitialize;
 end.
