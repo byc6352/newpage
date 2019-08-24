@@ -19,7 +19,7 @@
     Top = 41
     Width = 846
     Height = 741
-    ActivePage = ts0
+    ActivePage = ts3
     Align = alClient
     TabOrder = 0
     object ts0: TTabSheet
@@ -100,12 +100,13 @@
             '  <meta name="viewport" content="width=device-width, initial-sca' +
             'le=1.0">'
           '  <title></title>'
-          '  '
+          '  <link rel="stylesheet" href="images/style.css" />'
           '</head>'
           ''
-          '<body class="stackedit">'
+          '<body class="stackedit"><div class="stackedit__html">'
           ''
-          '</body>'
+          ''
+          '</div></body>'
           ''
           '</html>')
         ScrollBars = ssBoth
@@ -121,8 +122,6 @@
         Width = 838
         Height = 713
         Align = alClient
-        Lines.Strings = (
-          'Memo1')
         ScrollBars = ssBoth
         TabOrder = 0
       end
