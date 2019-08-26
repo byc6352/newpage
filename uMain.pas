@@ -62,9 +62,12 @@ type
   public
     { Public declarations }
   end;
-
+const
+  SOFT_TITLE='网页修改保存工具';
+  SOFT_VERSION='v1.0';
 var
   fMain: TfMain;
+
   mProtocol,mSite,mTitle,mCharset,mPage,mWorkDir,mModelPage:string;
 function getPageCode(doc:IHTMLDocument2):tstrings;//返回页面源代码
 function getPageContent(doc:IHTMLDocument2;tag:string):tstrings;//返回页面源代码
@@ -205,6 +208,7 @@ end;
 procedure TfMain.FormShow(Sender: TObject);
 begin
   web2.Navigate(mModelPage);
+  fmain.caption:=SOFT_TITLE+SOFT_VERSION;
 end;
 
 procedure TfMain.Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;
@@ -221,6 +225,7 @@ begin
   mSite:=doc.domain;
   mCharset:=doc.charset;
   if(mProtocol='HyperText Transfer Protocol with Privacy')then mProtocol:='https://' else mProtocol:='http://';
+  fmain.caption:=SOFT_TITLE+SOFT_VERSION+'('+mTitle+')';
   bar1.Panels[0].Text:='远程页面加载完毕！';
   //page1.ActivePageIndex:=1;
 end;
@@ -283,7 +288,7 @@ begin
     if(pos('/',url)=1)then url:=mProtocol+mSite+url;
     //replacestr(url,'file://',mProtocol);
     if(leftstr(url,7)='file://')then url:=replacestr(url,'file://',mProtocol);
-    num:=inttostr(i);
+    num:=inttostr(i+1);
     if(length(num)=1)then num:='0'+num;
     if(url[length(url)-3]='.')then fileext:=rightstr(url,4) else fileext:='.jpg';
     filename:=filetag+num+fileext;

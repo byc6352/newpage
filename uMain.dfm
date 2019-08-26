@@ -19,7 +19,7 @@
     Top = 41
     Width = 846
     Height = 741
-    ActivePage = ts3
+    ActivePage = ts0
     Align = alClient
     TabOrder = 0
     object ts0: TTabSheet
