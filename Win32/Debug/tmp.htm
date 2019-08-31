@@ -10,110 +10,867 @@
 
 <body class="stackedit"><div class="stackedit__html">
 
-<article class="baidu_pl">
-                <div id="article_content" class="article_content clearfix">
-                                                <div class="article-copyright">
-                <span class="creativecommons">
-                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
-                    </a>
-            <span>版权声明：本文为博主原创文章，遵循<a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"> CC 4.0 by-sa </a>版权协议，转载请附上原文出处链接和本声明。 </span>
-               <div class="article-source-link2222">
-                    本文链接：<a href="https://blog.csdn.net/byc6352/article/details/100127086">https://blog.csdn.net/byc6352/article/details/100127086</a>
-                </div>
-            </span>
-                    </div>
-                                                    <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css">
-                                        <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css">
-                <div class="htmledit_views" id="content_views">
-                                            <h1><a name="t0"></a>delphi 详解Variant 的相关函数</h1>
+<div class="bd doc-reader" style="position:relative;" oncopy="return false">
+<div class="doc-tag-wrap super-vip" style="visibility: visible;">
+<div class="doc-tag doc-tag-professional">
+<i class="triangle-left"></i>
+<span>专业文档</span>
+<div class="triangle-wrap">
+<i class="top-triangle"></i>
+<i class="bottom-triangle"></i>
+</div>
+<div class="tag-info">
+<i class="triangle-icon"></i>
+专业文档是百度文库认证用户/机构上传的专业性文档，文库VIP用户或购买专业文档下载特权礼包的其他会员用户可用专业文档下载特权免费下载专业文档。只要带有以下“专业文档”标识的文档便是该类文档。<a href="/portal/browse/help#help/29">了解文档类型</a>
+</div>
+</div>
+<div class="doc-tag doc-tag-vip-free">
+<i class="triangle-left"></i>
+<span>VIP免费文档</span>
+<div class="triangle-wrap">
+<i class="top-triangle"></i>
+<i class="bottom-triangle"></i>
+</div>
+<div class="tag-info">
+<i class="triangle-icon"></i>
+VIP免费文档是特定的一类共享文档，会员用户可以免费随意获取，非会员用户需要消耗下载券/积分获取。只要带有以下“VIP免费文档”标识的文档便是该类文档。<a href="/portal/browse/help#help/29">了解文档类型</a>
+</div>
+</div>
+<div class="doc-tag doc-tag-pay-discount">
+<i class="triangle-left"></i>
+<span>VIP尊享8折文档</span>
+<div class="triangle-wrap">
+<i class="top-triangle"></i>
+<i class="bottom-triangle"></i>
+</div>
+<div class="tag-info">
+<i class="triangle-icon"></i>
+VIP专享8折文档是特定的一类付费文档，会员用户可以通过设定价的8折获取，非会员用户需要原价获取。只要带有以下“VIP专享8折优惠”标识的文档便是该类文档。<a href="/portal/browse/help#help/29">了解文档类型</a>
+</div>
+</div>
+<div class="doc-tag doc-tag-pay-normal">
+<i class="triangle-left"></i>
+<span>付费文档</span>
+<div class="triangle-wrap">
+<i class="top-triangle"></i>
+<i class="bottom-triangle"></i>
+</div>
+<div class="tag-info">
+<i class="triangle-icon"></i>
+付费文档是百度文库认证用户/机构上传的专业性文档，需要文库用户支付人民币获取，具体价格由上传人自由设定。只要带有以下“付费文档”标识的文档便是该类文档。<a href="/portal/browse/help#help/29">了解文档类型</a>
+</div>
+</div>
+<div class="doc-tag doc-tag-ticket" style="display: block;">
+<i class="triangle-left"></i>
+<span>共享文档</span>
+<div class="triangle-wrap">
+<i class="top-triangle"></i>
+<i class="bottom-triangle"></i>
+</div>
+<div class="tag-info">
+<i class="triangle-icon"></i>
+共享文档是百度文库用户免费上传的可与其他用户免费共享的文档，具体共享方式由上传人自由设定。只要带有以下“共享文档”标识的文档便是该类文档。<a href="/portal/browse/help#help/29">了解文档类型</a>
+</div>
+</div>
+</div>
 
-<p>1.VarArrayCreate()和VarArrayOf()这两个常用就不说了<br>
-2.VarArrayRedim()函数能修改variant数组的最高限。<br>
-3.VarArrayDimCount()函数返回Variant数组的维数，<br>
-4.VarArrayLowBound()和VarArrayHighBound()函数分别返回Variant数组的下边界和上边界。<br>
-5.VarArrayLock()和VarArrayUnlock()一般用于初始化一个大数组。<br>
-如:<br>
-它创建一个有10000字节的Variant数组。假定有另一个相同长度的非Variant类型的数组，并且想<br>
-把非variant类型的数组复制到variant类型的数组中去。通常这都是通过用循环语句对variant数组<br>
-的单元进行赋值实现的。示例如下：<br><br>
-begin<br>
-&nbsp;&nbsp;v:=VarArrayCreate([1,10000],varBate);<br>
-&nbsp;&nbsp;fori:=1to10000do<br>
-&nbsp;&nbsp;v[i]:=a[i];<br>
-end;<br><br>
-上面这段代码的主要问题在于，大量的时间花费在对Variant数组的初始化上，因为在对每一个元<br>
-素进行赋值时，都要通过运行时逻辑来检查并判断数据类型的兼容性、每个元素的位置等等。为了避<br>
-免运行时检查，要用VarArrayLock()函数和VarArrayUnlock()过程。VarArrayLock()函数在内存中锁<br>
-定数组，使数组不再移动和改变大小，并能返回一个指向数组数据的指针。而VarArrayUnlock()过程<br>
-用来对VarArrayLock()函数锁定的数组进行解锁，使数组能重新移动或改变大小。在锁定数组后，能<br>
-用更有效的方法对数组进行初始化，例如用指向数组数据的指针调用Move()过程，下面的代码也对<br>
-Variant数组进行初始化，但它更有效：<br><br>
-begin<br>
-&nbsp;&nbsp;v:=VarArrayCreate([1,10000],varBate);<br>
-&nbsp;&nbsp;p:=VarArrayLock(v)<br>
-&nbsp;&nbsp;try<br>
-&nbsp;&nbsp; &nbsp;move(A,P^,10000);<br>
-&nbsp;&nbsp;finally<br>
-&nbsp;&nbsp; &nbsp;VarArrayUnlock(v);<br>
-&nbsp;&nbsp;end;<br>
-end;<br><br>
-6.VarArrayRef()获得variant指向的数据<br>
-7.VarIsArray()函数是一个简单的布尔检查函数，如果传递给它的参数是一个Variant数组则返回True，否则返回False.<br>
-8.VarClear()过程清除Variant变量并将VType域的值设为varEmpty.<br>
-9.VarCopy()将Source复制到Dest。<br>
-10.VarCast()将一个Variant转换成指定的类型并存储在另一个Variant变量中。<br>
-11.VarType()返回指定Variant的varXXX类型代码。<br>
-12.VarAsType()跟VarCast()的功能一样。<br>
-13.VarIsEmpty()如果一个Variant变量的类型代码是varEmpty则返回True。<br>
-14.VarIsNull()判断Variant变量是否包含null值。<br>
-15.VarToStr()将一个Variant变量转换成字符串表达式(如果Variant为varEmpty或varNUll则为空字符<br>
-串)。<br>
-16.VarFromDateTime()返回一个Variant变量，它存放着指定的TDateTime类型的值。<br>
-17.VarToDateTime()返回在Variant中的TDateTime类型的值。</p>
+<div class="reader-container txt" id="txt-reader-container" style="width: 744px;">
+<div class="reader-container-inner">
+<div class="mod reader-page-mod complex">
 
-<p>18.引用单元&nbsp;Variants</p>
+<div class="bd" style="height: auto;"><div class="reader-page-wrap " id="reader-pageNo-1"><p class="p-txt" style="font-size: 14px; line-height: 1.4;">delphi TWebBrowser组件使用详解 
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">该组件是一个浏览器组件，可以显示一个指定地址的网页、设置网页打开时的主页以及对网页进行相关的操作，同时也可以对HTML文件进行剪切、复制、粘贴、删除等操作。该 组件在Internet组件页中。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">1．属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（1）AddressBar属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">设置是否显示地址栏，在TWebBrowser中没有用。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property AddressBar: WordBool;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（2）Busy属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">确定Web浏览器组件是否正在导航到一个新的URL地址或正在下载文档。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property Busy: WordBool;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">如果该属性值为True，则在开始一个新的操作前，可用Stop方法中止当前操作，然后再导航到其他的页面，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure TForm1.BitBtn1Click(Sender: TObject);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">begin
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if WebBrowser1.Busy then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Stop;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Navigate('www.mingrisoft.com');
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（3）Container属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">访问Web浏览器父类或容器的接口。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property Container: IDispatch;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">如果Web浏览器没有一个具有Automation接口的容器，则该属性的值为空。否则可以通过返回的接口，访问Web浏览器父类或容器，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if WebBrowser1.Container &lt;&gt; nil then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">begin
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Stop;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">else
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ShowMessage('Web浏览器没有一个具有Automation接口的容器');
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（4）ControlInterface属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">访问WebBrowser组件接口，这个接口允许一个Automation控制器访问Web浏览器的属性、方法和事件。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property   ControlInterface: IWebBrowser2;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">显示WebBrowser1组件的名称，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Showmessage(WebBrowser1.ControlInterface.Name);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（5）FullName属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">指定主机上Web浏览器组件的可执行文件的完整的合法路径名。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property FullName: WideString;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">显示Web浏览器组件所在的可执行文件的名称，并且包含路径，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ShowMessage('Web组件所在的可执行文件为：'+WebBrowser1.FullName);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（6）LocationName属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">获得当前在Web浏览器组件中显示的资源名。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property LocationName: WideString;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">显示网页标题的名称，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ShowMessage('网页标题名：'+WebBrowser1.LocationName);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（7）LocationURL属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">确定当前显示文档、文件夹的URL或路径。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property LocationURL: WideString;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">显示地址的完整路径，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ShowMessage('Web浏览器组件连接的URL为：'+WebBrowser1.LocationURL);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（8）Name属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">指定计算机上的TWebBrowser的名称。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property Name: WideString;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（9）Offline属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">指定Web浏览器是否从本地缓存中获取文档。该属性为True时，表示Web浏览器以脱机方式工作，否则为在线方式。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property Offline: WordBool;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">注意：可以使用IE浏览器保存HTML网页到本地缓存，浏览器可以脱机方式工作。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（10）Path属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">指定主
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;"></p></div><div class="reader-page-wrap " id="reader-pageNo-2"><p class="p-txt" style="font-size: 14px; line-height: 1.4;">机上Web浏览器组件可执行文件的路径名，不包括文件名。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property Path: WideString;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Str := WebBrowser1.Path;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（11）ReadyState属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">获得指定Web浏览器组件的状态信息，使用这个信息可避免Web浏览器执行未准备的操作。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property ReadyState: TOleEnum;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（12）RegisterAsBrowser属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">设置该属性为True时，当前使用的Web浏览器组件成为最高级别浏览器。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property RegisterAsBrowser: WordBool;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（13）RegisterAsDropTarget属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">指出是否允许用户拖放HTML文档到当前Web浏览器。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property RegisterAsDropTarget: WordBool;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">该属性为True时，允许用户拖放HTML文档到当前Web浏览器；否则拖放操作无效，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure TForm1.ToolButton4Click(Sender: TObject);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">begin
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if not WebBrowser1.RegisterAsDropTarget then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.RegisterAsDropTarget:=true;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（14）Silent属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">指定TWebBrowser是否显示对话框。该属性为True时，该对话框不再显示脚本错误。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property Silent: WordBool;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（15）Type_属性
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">指定包含的文档对象的类型名称，读取该属性以确定Automation对象的类型，该对象的接口通过Document属性表示。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property Type_: WideString;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">显示文件的类型，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ShowMessage('Automation对象的类型为:'+WebBrowser1.Type_);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">2．方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（1）ClientToWindow方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">IE使用该方法转换客户坐标与窗口坐标。一般不要使用该方法。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure ClientToWindow(var pcx: SYSINT; var pcy: SYSINT);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">pcx：坐标点X。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">pcy：坐标点Y。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（2）ExecWB方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">允许用户用IOleCommandTarget接口传递一个命令到当前Web浏览器组件。Microsoft定义了一些常量来表示这些命令，但是Web浏览器不全部支持这些命令，可用QueryStatusWB方法使用这些命令。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure ExecWB(cmdID: OLECMDID; cmdexecopt: OLECMDEXECOPT); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure ExecWB(cmdID: OLECMDID; cmdexecopt: OLECMDEXECOPT; var pvaIn: OleVariant);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure ExecWB(cmdID: OLECMDID; cmdexecopt: OLECMDEXECOPT; var pvaIn: OleVariant;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">var pvaOut: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">调用ExecWB方法能够完成许多功能，例如停止网页浏览，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.ExecWB(OLECMDID_STOP,OLECMDEXECOPT_PROMPTUSER);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（3）GoBack方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">返回到历史列表中的上一个文档。如果历史列表中没有包含另外的文档，该方法将无效。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure GoBack;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">返回当前页的上一页，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.GoBack();
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（4）GoForward方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">返回到历史列表中的下一个文档，与最后调用GoBack方法的效果相反。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure GoForward;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">返回当前页的下一页，但是如果历史列表中没有下一个文档，则产生异常，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">try
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.GoForward();
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">except
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">exit;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（5）G
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;"></p></div><div class="reader-page-wrap " id="reader-pageNo-3"><p class="p-txt" style="font-size: 14px; line-height: 1.4;">oHome方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">返回已注册主页或开始页，在注册表中指定主页的注册项为：HKEY_CURRENT_USER\Sof- tware\Microsoft\IE\Main下的SStartpage名称栏。可用TRegistry、TRegistryIniFile对象或IE浏览器“工具”中的Internet选项改变注册主页。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure GoHome;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">返回主页，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if WebBrowser1.Busy then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Stop;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.GoHome;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（6）GoSearch方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">打开已注册的搜索网页，在注册表中指定搜索网页的注册项为：HKEY_CURRENT_USER\ Sof- ware\Microsoft\IE\Main下的SearchPage名称栏。可用TRegistry、TRegistryIniFile对象或IE浏览器中“工具”中的Internet选项改变注册搜索网页。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure GoSearch;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">打开已注册的搜索网页，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if WebBrowser1.Busy then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Stop;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.GoSearch();
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（7）Navigate方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">定位或下载指定的资源，发送HTTP消息到指定的URL并显示指定文件的内容，也可用来显示指定的文件。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString; var Flags: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString; var Flags: OleVariant;var TargetFrameName:
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString; var Flags: OleVariant; var TargetFrameName: 
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">OleVariant; var PostData: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString; var Flags: OleVariant; var TargetFrameName:
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">OleVariant; var PostData: OleVariant; var Headers: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Navigate方法语法中各参数的说明如表26.14所示。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Navigate方法是TWebBrowser组件中最重要的方法之一，使用该方法能够将当前TWebBrowser组件导航到任何存在的链接上，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if WebBrowser1.Busy then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Stop;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Navigate(URL);     //URL为网址
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（8）Navigate2方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">定位或下载指定的资源，发送HTTP消息到指定的URL并显示指定文件的内容，或导航到不能表达为URL的资源。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate2(var URL: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate2(var URL: OleVariant; var Flags: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate2(var URL: OleVariant; var Flags: OleVariant; var TargetFrameName:
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">OleVariant); Overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate2(var URL: OleVariant; var Flags: OleVariant; var TargetFrameName:
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">OleVariant; var PostData: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate2(var URL: OleVariant; var Flags: OleVariant; var TargetFrameName:
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">OleVariant; var PostData: OleVariant; var Headers: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Navigate2方法与Navegate方法类似，能够将当前TWebBrowser组件导航到指定的资源，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure TForm1.GoUrl2(URL: String);    //URL为指定的资源的网址
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">var
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">oUrl:Olevariant;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">oPost,oFram,oflag:Olevariant;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">begin
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">oUrl:=Url;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">oFram:=0;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">oFlag:=navOpenInNewWindow;     //在新窗口中打开资
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;"></p></div><div class="reader-page-wrap hidden-doc-banner" id="reader-pageNo-4" style="display: block;"><p class="p-txt" style="font-size: 14px; line-height: 1.4;">源
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">oPost:='';
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if WebBrowser1.Busy then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Stop;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Navigate2(oUrl,oFlag,oFram,oPost);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（9）QueryStatusWB方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">确定可以使用ExecWB方法执行的命令，即Web浏览器支持的命令信息，该方法使用IOleCommandTarget接口的QueryStatus方法来得到命令状态的信息。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">function   QueryStatusWB(cmdID: OLECMDID): OLECMDF;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">cmdID：指定要获取其信息的命令。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（10）Refresh方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">重新载入当前文档。Web浏览器正在显示的URL指定的资源可能已经发生变化时，这个方法非常有用。该方法总是发送一个参数，即非缓存标题，通知服务器不要返回缓存的复制，这对于某些服务器可能是一个问题。为阻止发送这个非缓存标题参数或只是刷新过期的网页，可用Refresh2方法。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Refresh;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">该方法完成了IE浏览器的刷新功能，可以使用该方法来重新载入当前页面，如果当前TWebBrowser组件没有载入任何的网页，则会产生异常，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if WebBrowser1.LocationURL&lt;&gt;'' then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Refresh;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（11）Refresh2方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">调用Refresh2方法重新装入当前文档，与Refresh方法不同的是，该方法可指定要完成的刷新级别。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Refresh2; overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Refresh2(var Level: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Level：指定要被刷新信息的类型，其取值如表7所示。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Refresh2方法提供了更加复杂的刷新方式，提供了多种刷新方法，通过该方法同样能够实现Refresh方法完成的任务，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure TForm1.ToolButton7Click(Sender: TObject);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">var
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Level:Olevariant;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">begin
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Level:=REFRESH_IFEXPIRED;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if WebBrowser1.LocationURL&lt;&gt;'' then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Refresh2(Level);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（12）Stop方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">终止任何未完成的导航或下载操作，并终止任何动态的网页元素，如背景音乐和动画等。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Stop;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">该方法实现了IE中的停止功能，即停止了一切载入工作，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">WebBrowser1.Stop;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">3．事件
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（1）OnBeforeNavigate2事件
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Web浏览器导航到一个新的资源前被触发。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property OnBeforeNavigate2: TWebBrowserBeforeNavigate2;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">type TWebBrowserBeforeNavigate2 = procedure(Sender: TObject; const pDisp: IDispatch; var URL: OleVariant; var Flags: OleVariant; var TargetFrameName: OleVariant; var PostData: OleVariant; var Headers: OleVariant; var Cancel: WordBool) of object;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（2）OnCommandStateChange事件
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">当执行TWebBrowser组件的某个方法的功能改变时被触发，其状态取值决定于执行Web浏览器中某个方法的功能。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property OnCommandStateChange: TWebBrowserCommandStateChange;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">type TWebBrowserCommandStateChange = procedure(Sender: TObject; Command: Integer; Enable: WordBool) of object;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Sender：指出其功能已变化的Web浏览器组件。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Enable：指定CSC_NAVIGATEFORWARD或CS
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;"></p></div><div class="reader-page-wrap hidden-doc-banner" id="reader-pageNo-5" style="display: block;"><p class="p-txt" style="font-size: 14px; line-height: 1.4;">C_NAVIGATEBACK命令是否可用，其值为True时，可用；否则不可用。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">OnCommandStateChange事件提供了一个命令状态改变后的处理功能，通过该事件能够判断执行某个命令后的当前浏览器状态，例如控制“后退”、“前进”或“停止”按钮是否可用，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure TForm1.WebBrowser1CommandStateChange(Sender: TObject;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Command: Integer; Enable: WordBool);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">begin
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">case Command of
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">CSC_NAVIGATEBACK: ToolButton5.Enabled := Enable;     //“后退”按钮
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">CSC_NAVIGATEFORWARD: ToolButton4.Enabled := Enable;     //“前进”按钮
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">CSC_UPDATECOMMANDS: ToolButton2.Enabled := TWebBrowser(Sender).Busy;   //“停止”按钮
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（3）OnDownloadBegin事件
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Web浏览器开始下载一个文档时被触发，编写其事件处理程序可以指定Web浏览器定位到一个文档后下载该文档前应采取的操作。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property OnDownloadBegin: TNotifyEvent;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">type TNotifyEvent = procedure (Sender: TObject) of object;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（4）OnDownloadComplete事件
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">导航操作完成、暂停或操作失败时被触发，编写其事件处理程序可以指定应采取的操作。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property OnDownloadComplete: TNotifyEvent;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">type TNotifyEvent = procedure (Sender: TObject) of object;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（5）OnNavigateComplete2事件
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">当Web浏览器成功地导航到一个新的位置时被触发，编写其事件处理程序可以指定应执行的操作。这个事件可能产生在当前文档下载完成前，但是事件结束时，至少已经接收到部分文档并产生了文档视图。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property OnNavigateComplete2: TWebBrowserNavigateComplete2;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">type TWebBrowserNavigateComplete2 = procedure(Sender: TObject; const pDisp:
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">IDispatch; var URL: OleVariant) of object;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Sender：导航到新的资源的Web浏览器。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">pDisp：浏览器的Automation接口。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">当TWebBrowser组件成功地导航到一个新的位置后触发该事件，利用该事件能够获得当前状态或URL地址，代码如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if WebBrowser1.Offline then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Statusbar1.Panels[Statusbar1.Panels.Count-1].Text:='脱机';
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">else
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Statusbar1.Panels[Statusbar1.Panels.Count-1].Text:='在线';
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ComboBox1.Text:=WebBrowser1.LocationURL;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">（6）OnProgressChange事件
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">当更新下载操作的进度时被触发，编写其事件处理程序可以提供一个关于下载进度的可视化的反馈。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">语法：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">property OnProgressChange: TWebBrowserProgressChange;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">type TWebBrowserProgressChange = procedure(Sender: TObject; Progress: Integer;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ProgressMax: Integer) of object;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Sender：正在下载文档处理进程中的Web浏览器。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Progress：指出有多少文档已经下载，取值范围在0~ProgressMax之间。当其参数为−1时，操作结束。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">PropressMax：指示下载操作的最大值。
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">示例：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">利用该事件能够设计一个准确的网页载入进度条，该进度条表示了当前网页的载入进度，代码
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;"></p></div><div class="reader-page-wrap hidden-doc-banner" id="reader-pageNo-6" style="display: block;"><p class="p-txt" style="font-size: 14px; line-height: 1.4;">如下：
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure TForm1.WebBrowser1ProgressChange(Sender: TObject; Progress,
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ProgressMax: Integer);
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">begin
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ProgressBar1.Max:=ProgressMax;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if Progress = -1 then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ProgressBar1.Visible:=false
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">else
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">begin
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ProgressBar1.Position := Progress;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ProgressBar1.Visible := True;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">if   ProgressBar1.Position = ProgressMax then
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">ProgressBar1.Visible:=False;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">end;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">要实现这些功能的人大多数是写刷新网页的程序，可以从webbrowser.navigate的FLAG设置来实现不从磁盘缓冲区读取数据
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Navigate方法
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">webbrowser.navigate URL [flag,][targetFrame,][postData,][headers]
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">如：webbrowser.navigate "http://www.sina.com" 
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">flag=3，不从磁盘缓冲区读取数据
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">flag=4，转移结果不写入缓冲区
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Delphi syntax:
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString; var Flags: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString; var Flags: OleVariant; var TargetFrameName: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString; var Flags: OleVariant; var TargetFrameName: OleVariant; var PostData: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">procedure Navigate(const URL: WideString; var Flags: OleVariant; var TargetFrameName: OleVariant; var PostData: OleVariant; var Headers: OleVariant); overload;
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Description
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Use Navigate to locate and download a specific resource. Navigate can send an HTTP message to a specified URL and display the results or simply display the results of a specified file.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">URL specifies the UNC path name of a file or the Uniform Resource Locator of an Internet resource that the Web browser should display.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Flags is a set of values that specify whether to add the resource to the history list, whether to read from or write to the cache, and whether to display the resource in a new window. It can be a sum of zero or more of the following:
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Constant	Value	Meaning 
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">navOpenInNewWindow	1	Open the resource or file in a new window.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">navNoHistory	2	Do not add the resource or file to the history list. The new page replaces the current page in the list.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">navNoReadFromCache	4	Do not read from the disk cache for this navigation.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">navNoWriteToCache	8	Do not write the results of this navigation to the disk cache.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">navAllowAutosearch	16	If the navigation fails, the Web browser attempts to navigate common root domains (.com, .edu, and so on). If this still fails, the URL is passed to a search engine.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">TargetFrameName is the name of the frame in which the resource will be displayed, or NULL if the resource should not be displayed in a named frame.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">PostData contains the data sent to the server when using Navigate to generate an HTTP POST message. If PostData is NULL, Navigate generates an HTTP GET message. PostData is ignored if URL does not specify an HTTP URL.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Headers contains any headers sent to the servers when the URL represents an HTTP URL. HTTP headers specify such things as the intended
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;"></p></div><div class="reader-page-wrap hidden-doc-banner" id="reader-pageNo-7" style="display: block;"><p class="p-txt" style="font-size: 14px; line-height: 1.4;">action required of the server, the type of data, and so on. (See TWebRequest object, whose properties represent many of the more common headers).
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;">Note:	To navigate to a location that can抰 be expressed as an URL (for example, to an item identifier list), use the Navigate2 method instead.
+</p>
+<p class="p-txt" style="font-size: 14px; line-height: 1.4;"></p></div></div>
+</div>
+</div>
 
-<p>&nbsp;</p>
 
-<h1><a name="t1"></a><a href="http://www.cnblogs.com/hnxxcxg/archive/2013/01/30/2882721.html" rel="nofollow" id="cb_post_title_url" data-token="247555ed9a9a16f9565f600093b247db">OleVariant的本质</a></h1>
+<div id="html-reader-go-more" class="banner-wrap more-btn-banner" style="height: auto; display: none;">
+<div class="banner-core-wrap super-vip"><div class="doc-banner-text">下载文档到电脑，使用更方便</div><div class="doc-banner-value"><div><span class="icon-ticket"></span>1下载券</div></div><div class="doc-banner-btns super-vip">        <div class="btn-download"><i></i>下载</div><div class="btn-pay-vip"><i></i>VIP免券下载                <div class="new-user-discount-tip">VIP新客立减2元</div></div>    </div><div class="doc-banner-tip super-vip"><div class="doc-banner-rights-wrap"><span class="icon-triangle" style="left: 276.25px;"></span><div class="download-pro-doc"><i></i>享专业文档下载特权</div><div class="download-share-doc"><i></i>赠共享文档下载特权</div><div class="yuedu-vip"><i></i>赠百度阅读VIP精品版</div></div></div></div>
+<div class="continue-to-read">
+<div class="banner-more-btn">
+<span class="moreBtn goBtn">
+<span>还剩4页未读，</span>
+<span class="fc2e">继续阅读</span>
+</span>
+<p class="down-arrow goBtn"></p>
+</div>
+<div class="hengxian"></div>
+</div>
+<div class="wubai-wrap">
+<div class="wubai-title">
+<span class="wubai-icon"></span>
+<p>定制HR最喜欢的简历</p>
+</div>
+<a href="/org/browse/jianlidingzhi" target="_blank" class="wubai-rukou log-xsend" data-logxsend="[1, 100844]">
+我要定制简历</a>
+</div>
+<div class="fc-container" style="display: block;"><div class="fc-wrap"><div class="relate-title"><p class="content" style="display: none;"></p></div><div class="fc-inner"><style type="text/css">.lw_Yvr {margin: 20px auto 30px;text-align: center;}.lw_Yvr .FcqHWf {margin-bottom: 20px;}.lw_Yvr .jRSFaW {margin-right: 10px;font-size: 14px;color: #333;display: inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;vertical-align: bottom;max-width: 320px;}.lw_Yvr .jRSFaW font {color: #333!important;}.lw_Yvr .HCSwtp {font-size: 13px;color: #666;}.lw_Yvr .dahpnB {display: inline-block;border: 1px solid #2fad85;border-radius: 2px;}.lw_Yvr .dahpnB a {display: block;padding: 12px 24px;font-size: 18px;color: #2fad86;background-color: #fff;}.lw_Yvr .dahpnB a:hover {color: #fff;background-color: #2fad85;text-decoration: none;}</style><div class="lw_Yvr"><div class="FcqHWf mAixyI"><a class="jRSFaW" href="http://www.baidu.com/baidu.php?url=060000ae5skSL9u_F9B9vwclOpeh9EL_eMVRaxlgaLoREHMkxwo93eyTrWDkhnwCppeEQ7w9wCMy9jJsgqIEQh66m7_36VU8JJB83omh5kePIaSDJIvnAQljY1HkWFw09_EFCR_3rWYdhjn9evGOqKecnjSbamMW0nYoqwLjbe5HtqPOW65ZmpOHi6sq9sfGUS94mdPmVUk46qnGs6.7Y_ifYgsq_puECH4gn1RcY_1fdXAaBSQV69CE9eXqZDkvTxAzz1_lIvi1k_3elS1oIZzktEUsp_HAeu3vyyyU_hektXMkovurVYx2M-u8knTpth1GzXrOWvurVYx2M-8Hqj3R_fqUCSgKPw4xCmzIUCSy4nIj-sHRy2J7jZZOlsfTZKsXRzIU3MYZOwzfTPR7_TagqoC_qauh4SU5Aegf3AubspRYAprX7vMil4qKlmSSa9G4mgwRDkRA5z8Bquhmo8gYwtElD1P1tLgKfYt8-P1tA-BZZjdsRP5QAeKPa-Wdukmr8a9G4myIrP-SJFBEIblpqMQOoHoxDS6Ol51n3Eki1PjNOcOxqxqMJhWe59uY3vglCEETk_tTMZo6CpXy6hUik9tqhZden5o8sSXOj_tTrSEj4e_5og9LSXZ1vmxgI9qUn5M8se5U9qxo9tqhZdSyZvOgj4qhZdqT5oYoDkS5MzG9IG3Q2SgWu3vmr-nps1f_TxZIbv2.U1Yk0ZDq8xJtzoEAExaLd_evzrvtO6KspynqnfKY5UM1Exj2qPxxz_UceU1S0A-V5HRLnsKM5gK1UMn0Iybq0ZKGujY1PsKWpyfqn0KVIjYs0AVG5H00TMfqnHmk0ANGujY0mhbqnW0Yg1nsn-t1njn0Uynqn0KkTA-b5H00TyPGujYs0ZFMIA7M5H00Uy-b5H00pg7Y5H00mycqn7ts0ANzu1Ys0ZKs5H00UMus5H08nj0snj0snj00Ugws5H00uAwETjYs0ZFJ5H00uMfqn0KspjYs0Aq15H00mMTqn0K8IjYs0ZPl5fK9TdqGuAnqujDvQyPV0A-bm1Y0IZN15HDLnWD1rj01PW0sP1mdrHnYPHDv0ZF-TgfqnHRvP1ckP1nkPHf1P0K1pyfqnj0sPHbkPW01Pvfzmhmkm6KWTvYqrjcLPHRsfRczn1c4PYf4rfK9m1Yk0ZK85H00TydY5Hb4rfKkUgnqn0KlIjYs0AdWgvuzUvYqn0Kbmy4dmhNxTAk9Uh-bT1Y0TA7Ygvu_myTqn0Kbmv-b5H00ugwGujYVnfK9TLKWm1Ys0ZNspy4Wm1Ys0Z7VuWYs0AuWIgfqn0KlTAkdT1Ys0A7buhk9u1Yk0Akhm1Ys0AqY5H00ULFsIjYsc10Wc10Wnansc108nj0snj0sc10Wc100mLFW5HfzPHf1&amp;word=%E5%9B%BD%E9%99%85%E9%BB%84%E9%87%91%E5%88%86%E6%9E%90%E8%BD%AF%E4%BB%B6&amp;shh=wenku.baidu.com" target="_blank">路孚特丨全球专业的贵金属走势软件</a><span class="HCSwtp">广告</span></div><div class="dahpnB mAixyI"><a href="http://www.baidu.com/baidu.php?url=060000ae5skSL9u_F9B9vwclOpeh9EL_eMVRaxlgaLoREHMkxwo93eyTrWDkhnwCppeEQ7w9wCMy9jJsgqIEQh66m7_36VU8JJB83omh5kePIaSDJIvnAQljY1HkWFw09_EFCR_3rWYdhjn9evGOqKecnjSbamMW0nYoqwLjbe5HtqPOW65ZmpOHi6sq9sfGUS94mdPmVUk46qnGs6.7Y_ifYgsq_puECH4gn1RcY_1fdXAaBSQV69CE9eXqZDkvTxAzz1_lIvi1k_3elS1oIZzktEUsp_HAeu3vyyyU_hektXMkovurVYx2M-u8knTpth1GzXrOWvurVYx2M-8Hqj3R_fqUCSgKPw4xCmzIUCSy4nIj-sHRy2J7jZZOlsfTZKsXRzIU3MYZOwzfTPR7_TagqoC_qauh4SU5Aegf3AubspRYAprX7vMil4qKlmSSa9G4mgwRDkRA5z8Bquhmo8gYwtElD1P1tLgKfYt8-P1tA-BZZjdsRP5QAeKPa-Wdukmr8a9G4myIrP-SJFBEIblpqMQOoHoxDS6Ol51n3Eki1PjNOcOxqxqMJhWe59uY3vglCEETk_tTMZo6CpXy6hUik9tqhZden5o8sSXOj_tTrSEj4e_5og9LSXZ1vmxgI9qUn5M8se5U9qxo9tqhZdSyZvOgj4qhZdqT5oYoDkS5MzG9IG3Q2SgWu3vmr-nps1f_TxZIbv2.U1Yk0ZDq8xJtzoEAExaLd_evzrvtO6KspynqnfKY5UM1Exj2qPxxz_UceU1S0A-V5HRLnsKM5gK1UMn0Iybq0ZKGujY1PsKWpyfqn0KVIjYs0AVG5H00TMfqnHmk0ANGujY0mhbqnW0Yg1nsn-t1njn0Uynqn0KkTA-b5H00TyPGujYs0ZFMIA7M5H00Uy-b5H00pg7Y5H00mycqn7ts0ANzu1Ys0ZKs5H00UMus5H08nj0snj0snj00Ugws5H00uAwETjYs0ZFJ5H00uMfqn0KspjYs0Aq15H00mMTqn0K8IjYs0ZPl5fK9TdqGuAnqujDvQyPV0A-bm1Y0IZN15HDLnWD1rj01PW0sP1mdrHnYPHDv0ZF-TgfqnHRvP1ckP1nkPHf1P0K1pyfqnj0sPHbkPW01Pvfzmhmkm6KWTvYqrjcLPHRsfRczn1c4PYf4rfK9m1Yk0ZK85H00TydY5Hb4rfKkUgnqn0KlIjYs0AdWgvuzUvYqn0Kbmy4dmhNxTAk9Uh-bT1Y0TA7Ygvu_myTqn0Kbmv-b5H00ugwGujYVnfK9TLKWm1Ys0ZNspy4Wm1Ys0Z7VuWYs0AuWIgfqn0KlTAkdT1Ys0A7buhk9u1Yk0Akhm1Ys0AqY5H00ULFsIjYsc10Wc10Wnansc108nj0snj0sc10Wc100mLFW5HfzPHf1&amp;word=%E5%9B%BD%E9%99%85%E9%BB%84%E9%87%91%E5%88%86%E6%9E%90%E8%BD%AF%E4%BB%B6&amp;shh=wenku.baidu.com" target="_blank">查看详情</a></div></div></div></div><script>(function(win){win.ecom = win.ecom || {};win.ecom.pl2 = win.ecom.pl2 || {};win.ecom.pl2.imTimesign = parseInt("45" || 0, 10);win.ecom.pl2.searchId = "0005916037d2bf1b";})(window);(function(a){function b(d){var c=location.href.match("debug=1");var g=window.jQuery||{};if(!c){try{d(a.pl2,g)}catch(f){}}else{d(a.pl2,g)}}a.pl2.run=function(d,c){if(c||arguments.length==1){bds.ready(function(){b(d)})}else{b(d)}};a.pl2.q=function(f,g){g=g||document;if(g.getElementsByClassName){return g.getElementsByClassName(f)}else{var d=[];var c=g.all||g.getElementsByTagName("*");var e=c.length;f=f.replace(/\-/g,"\\-");var h=new RegExp("(^|\\s)"+f+"(\\s|$)");while(--e>=0){if(h.test(c[e].className)){d.push(c[e])}}return d}}})(window.ecom);(function(v){var h=undefined,g=undefined;var l=0,k=0;var e=0;var o=0;var i=0;var d=0;var m=0;var b=0;var t=0;var r=/link\?url\=([^\&]+)/;var n=/\?url\=([^\.]+)\./;function s(){var y=t.href;var x=r.exec(y)||n.exec(y);return x?x[1]:false}function u(z){var x=s();if(x!==false){var y=q(x,z);p(y)}}function p(z){var x="&ck="+[z,e,b,l,k,h,g,m].join(".");if(t.href){var y=t.href;if(y.indexOf("&ck=")==-1){t.href+=x}else{t.href=y.replace(/&ck=[\d.]*/,x)}}}function q(A,C){var B=0;for(var z=0;z<(((e*C)%99)+9);z++){var y=A.length<20?A.length:20;B+=A.charCodeAt((b*z)%A.length)}return B}function w(x){x=x||window.event;e++;if(h===undefined){h=x.clientX}if(g===undefined){g=x.clientY}o=new Date().getTime()}function f(y,x){y=y||window.event;t=y.target||y.srcElement;while(t&&t.tagName!="A"){t=t.parentNode}i=new Date().getTime();b=9999;l=y.clientX;k=y.clientY;if(o===0){m=0}else{m=i-o}u(x)}function j(y,x){d=new Date().getTime();b=d-i;u(x)}function c(C,z,B){var A,x,y;for(y in z){A=z[y];x=B[y];if(window.attachEvent){C.attachEvent("on"+A,x)}else{C.addEventListener(A,x,false)}}}function a(x){return[function(y){w(y)},function(y){f(y,x)},function(y){j(y,x)}]}v.ck=function(B,A){if(B.length===undefined){B=[B]}var x=B.length;var y=0;var z=a(A);for(;y<x;y++){c(B[y],["mouseover","mousedown","mouseup"],z)}}})(window.ecom.pl2);window.ecom.pl2.run(function(c){var e=c.q("mAixyI");for(var b=0;b<e.length;b++){var a=e[b];var d=a.getElementsByTagName("A");c.ck(d,window.ecom.pl2.imTimesign)}},false);</script></div>
+<div class="reader-fc-owner"></div>
+</div>
+<div class="new-fc-container"></div>
 
-<p>OleVariant的本质</p>
 
-<p>OleVariant，COM的一种数据类型。MIDAS基于COM之上构建的，自然使用OleVariant作为数据序列格式。</p>
 
-<p>延续到现在最新的DATASNAP仍然支持它。</p>
-
-<p>TClientDataset.data，TClientDataset.delta，这俩个属性<br>
-的类型都是OleVariant。</p>
-
-<p>OleVariant可以是string,integer,float...<br>
-这个大家都知道，但它也可以是array of OleVariant，这个<br>
-可能有人不知道了。明白了这点就是datasnap中间件主从表<br>
-数据同步的关键。</p>
-
-<p>olevariant存在于windows和linux平台,这二种类型主要的不同是variant类型仅是当前的应用程序可以进行操作,而olevariant类型则是ole自动化服务器所以定义的统一的数据类型,意味着可以通过网络或其他程序进行操作,当然也不必担心其他客户端如何进行操作.</p>
-
-<p>当你给一个variant类型的变量赋自定义的值的时候(例如delphi&nbsp;string,或一个其他的新的自定义类型),运行时间库将试着将他转化为olevariant标准数据类型(例如string转化为&nbsp;OLE&nbsp;BSTR&nbsp;string),例如,一个包括Ansistring数据的variant类型斌值给olevariant,ansiString将成为WideString,当把variant传为olevariant的函数参数也是一样的.</p>
-
-<p>&nbsp;</p>
-
-<p>------------------------------小小分割线---------------------------------</p>
-
-<p>VarlsEmpty 与&nbsp;&nbsp;VarlsNull&nbsp;</p>
-
-<p>他俩是一对双胞胎，长得像 但不是同一回事</p>
-
-<p>都是用于判断 Variant /OleVariant 这些变体型的数据格式</p>
-
-<p>区别（from delphi help）：</p>
-
-<p>1、VarIsNull是确定Variant变量是不是包含一个NULL值，这个变量是有值的，不过只是NULL，比如数据库字段的 null字段</p>
-
-<p>2、VarIsEmpty是确定Variant变量是不是有值，没有赋过值，这时这个函数返回True<br>
-&nbsp;———————————</p>
-                                    </div>
-                    </div>
-    </article>
+<div class="7 doc-bottom-wrap complex  hidden-doc-banner" id="doc_bottom_wrap" style="display: block;">
+<div class="bd" id="bottom-download" data-scale="" data-render="1">
+<div class="pay-page-inner reader-end-download bottom-core-wrap super-vip"><div class="doc-bottom-text">阅读已结束，下载本文需要</div><div class="doc-bottom-value"><div><span class="icon-ticket"></span>1下载券</div></div><div class="doc-bottom-btns super-vip">        <div class="btn-download"><i></i>下载</div><div class="btn-pay-vip"><i></i>VIP免券下载                <div class="new-user-discount-tip">VIP新客立减2元</div></div>    </div><div class="doc-bottom-tip super-vip"><div class="doc-bottom-rights-wrap"><span class="icon-triangle" style="left: 276.25px;"></span><div class="download-pro-doc"><i></i>享专业文档下载特权</div><div class="download-share-doc"><i></i>赠共享文档下载特权</div><div class="yuedu-vip"><i></i>赠百度阅读VIP精品版</div></div></div></div>
+<div class="wubai-wrap">
+<div class="hengxian"></div>
+<div class="wubai-title">
+<span class="wubai-icon"></span>
+<p>定制HR最喜欢的简历</p>
+</div>
+<a href="/org/browse/jianlidingzhi" target="_blank" title="" class="wubai-rukou log-xsend" data-logxsend="[1, 100844]">我要定制简历</a>
+</div></div>
+<div class="wkfc-wrap" style="display: block;"><div class="hengxian"></div><div class="fc-wrap"><div class="relate-title"><p class="content" style="display: none;"></p></div><div class="fc-inner"><style type="text/css">.lw_Yvr {margin: 20px auto 30px;text-align: center;}.lw_Yvr .FcqHWf {margin-bottom: 20px;}.lw_Yvr .jRSFaW {margin-right: 10px;font-size: 14px;color: #333;display: inline-block;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;vertical-align: bottom;max-width: 320px;}.lw_Yvr .jRSFaW font {color: #333!important;}.lw_Yvr .HCSwtp {font-size: 13px;color: #666;}.lw_Yvr .dahpnB {display: inline-block;border: 1px solid #2fad85;border-radius: 2px;}.lw_Yvr .dahpnB a {display: block;padding: 12px 24px;font-size: 18px;color: #2fad86;background-color: #fff;}.lw_Yvr .dahpnB a:hover {color: #fff;background-color: #2fad85;text-decoration: none;}</style><div class="lw_Yvr"><div class="FcqHWf mAixyI"><a class="jRSFaW" href="http://www.baidu.com/baidu.php?url=060000ae5skSL9u_F9B9vwclOpeh9EL_eMVRaxlgaLoREHMkxwo93eyTrWDkhnwCppeEQ7w9wCMy9jJsgqIEQh66m7_36VU8JJB83omh5kePIaSDJIvnAQljY1HkWFw09_EFCR_3rWYdhjn9evGOqKecnjSbamMW0nYoqwLjbe5HtqPOW65ZmpOHi6sq9sfGUS94mdPmVUk46qnGs6.7Y_ifYgsq_puECH4gn1RcY_1fdXAaBSQV69CE9eXqZDkvTxAzz1_lIvi1k_3elS1oIZzktEUsp_HAeu3vyyyU_hektXMkovurVYx2M-u8knTpth1GzXrOWvurVYx2M-8Hqj3R_fqUCSgKPw4xCmzIUCSy4nIj-sHRy2J7jZZOlsfTZKsXRzIU3MYZOwzfTPR7_TagqoC_qauh4SU5Aegf3AubspRYAprX7vMil4qKlmSSa9G4mgwRDkRA5z8Bquhmo8gYwtElD1P1tLgKfYt8-P1tA-BZZjdsRP5QAeKPa-Wdukmr8a9G4myIrP-SJFBEIblpqMQOoHoxDS6Ol51n3Eki1PjNOcOxqxqMJhWe59uY3vglCEETk_tTMZo6CpXy6hUik9tqhZden5o8sSXOj_tTrSEj4e_5og9LSXZ1vmxgI9qUn5M8se5U9qxo9tqhZdSyZvOgj4qhZdqT5oYoDkS5MzG9IG3Q2SgWu3vmr-nps1f_TxZIbv2.U1Yk0ZDq8xJtzoEAExaLd_evzrvtO6KspynqnfKY5UM1Exj2qPxxz_UceU1S0A-V5HRLnsKM5gK1UMn0Iybq0ZKGujY1PsKWpyfqn0KVIjYs0AVG5H00TMfqnHmk0ANGujY0mhbqnW0Yg1nsn-t1njn0Uynqn0KkTA-b5H00TyPGujYs0ZFMIA7M5H00Uy-b5H00pg7Y5H00mycqn7ts0ANzu1Ys0ZKs5H00UMus5H08nj0snj0snj00Ugws5H00uAwETjYs0ZFJ5H00uMfqn0KspjYs0Aq15H00mMTqn0K8IjYs0ZPl5fK9TdqGuAnqujDvQyPV0A-bm1Y0IZN15HDLnWD1rj01PW0sP1mdrHnYPHDv0ZF-TgfqnHRvP1ckP1nkPHf1P0K1pyfqnj0sPHbkPW01Pvfzmhmkm6KWTvYqrjcLPHRsfRczn1c4PYf4rfK9m1Yk0ZK85H00TydY5Hb4rfKkUgnqn0KlIjYs0AdWgvuzUvYqn0Kbmy4dmhNxTAk9Uh-bT1Y0TA7Ygvu_myTqn0Kbmv-b5H00ugwGujYVnfK9TLKWm1Ys0ZNspy4Wm1Ys0Z7VuWYs0AuWIgfqn0KlTAkdT1Ys0A7buhk9u1Yk0Akhm1Ys0AqY5H00ULFsIjYsc10Wc10Wnansc108nj0snj0sc10Wc100mLFW5HfzPHf1&amp;word=%E5%9B%BD%E9%99%85%E9%BB%84%E9%87%91%E5%88%86%E6%9E%90%E8%BD%AF%E4%BB%B6" target="_blank">路孚特丨全球专业的贵金属走势软件</a><span class="HCSwtp">广告</span></div><div class="dahpnB mAixyI"><a href="http://www.baidu.com/baidu.php?url=060000ae5skSL9u_F9B9vwclOpeh9EL_eMVRaxlgaLoREHMkxwo93eyTrWDkhnwCppeEQ7w9wCMy9jJsgqIEQh66m7_36VU8JJB83omh5kePIaSDJIvnAQljY1HkWFw09_EFCR_3rWYdhjn9evGOqKecnjSbamMW0nYoqwLjbe5HtqPOW65ZmpOHi6sq9sfGUS94mdPmVUk46qnGs6.7Y_ifYgsq_puECH4gn1RcY_1fdXAaBSQV69CE9eXqZDkvTxAzz1_lIvi1k_3elS1oIZzktEUsp_HAeu3vyyyU_hektXMkovurVYx2M-u8knTpth1GzXrOWvurVYx2M-8Hqj3R_fqUCSgKPw4xCmzIUCSy4nIj-sHRy2J7jZZOlsfTZKsXRzIU3MYZOwzfTPR7_TagqoC_qauh4SU5Aegf3AubspRYAprX7vMil4qKlmSSa9G4mgwRDkRA5z8Bquhmo8gYwtElD1P1tLgKfYt8-P1tA-BZZjdsRP5QAeKPa-Wdukmr8a9G4myIrP-SJFBEIblpqMQOoHoxDS6Ol51n3Eki1PjNOcOxqxqMJhWe59uY3vglCEETk_tTMZo6CpXy6hUik9tqhZden5o8sSXOj_tTrSEj4e_5og9LSXZ1vmxgI9qUn5M8se5U9qxo9tqhZdSyZvOgj4qhZdqT5oYoDkS5MzG9IG3Q2SgWu3vmr-nps1f_TxZIbv2.U1Yk0ZDq8xJtzoEAExaLd_evzrvtO6KspynqnfKY5UM1Exj2qPxxz_UceU1S0A-V5HRLnsKM5gK1UMn0Iybq0ZKGujY1PsKWpyfqn0KVIjYs0AVG5H00TMfqnHmk0ANGujY0mhbqnW0Yg1nsn-t1njn0Uynqn0KkTA-b5H00TyPGujYs0ZFMIA7M5H00Uy-b5H00pg7Y5H00mycqn7ts0ANzu1Ys0ZKs5H00UMus5H08nj0snj0snj00Ugws5H00uAwETjYs0ZFJ5H00uMfqn0KspjYs0Aq15H00mMTqn0K8IjYs0ZPl5fK9TdqGuAnqujDvQyPV0A-bm1Y0IZN15HDLnWD1rj01PW0sP1mdrHnYPHDv0ZF-TgfqnHRvP1ckP1nkPHf1P0K1pyfqnj0sPHbkPW01Pvfzmhmkm6KWTvYqrjcLPHRsfRczn1c4PYf4rfK9m1Yk0ZK85H00TydY5Hb4rfKkUgnqn0KlIjYs0AdWgvuzUvYqn0Kbmy4dmhNxTAk9Uh-bT1Y0TA7Ygvu_myTqn0Kbmv-b5H00ugwGujYVnfK9TLKWm1Ys0ZNspy4Wm1Ys0Z7VuWYs0AuWIgfqn0KlTAkdT1Ys0A7buhk9u1Yk0Akhm1Ys0AqY5H00ULFsIjYsc10Wc10Wnansc108nj0snj0sc10Wc100mLFW5HfzPHf1&amp;word=%E5%9B%BD%E9%99%85%E9%BB%84%E9%87%91%E5%88%86%E6%9E%90%E8%BD%AF%E4%BB%B6" target="_blank">查看详情</a></div></div></div></div></div><script>(function(win){win.ecom = win.ecom || {};win.ecom.pl2 = win.ecom.pl2 || {};win.ecom.pl2.imTimesign = parseInt("45" || 0, 10);win.ecom.pl2.searchId = "0005916037d2bf1b";})(window);(function(a){function b(d){var c=location.href.match("debug=1");var g=window.jQuery||{};if(!c){try{d(a.pl2,g)}catch(f){}}else{d(a.pl2,g)}}a.pl2.run=function(d,c){if(c||arguments.length==1){bds.ready(function(){b(d)})}else{b(d)}};a.pl2.q=function(f,g){g=g||document;if(g.getElementsByClassName){return g.getElementsByClassName(f)}else{var d=[];var c=g.all||g.getElementsByTagName("*");var e=c.length;f=f.replace(/\-/g,"\\-");var h=new RegExp("(^|\\s)"+f+"(\\s|$)");while(--e>=0){if(h.test(c[e].className)){d.push(c[e])}}return d}}})(window.ecom);(function(v){var h=undefined,g=undefined;var l=0,k=0;var e=0;var o=0;var i=0;var d=0;var m=0;var b=0;var t=0;var r=/link\?url\=([^\&]+)/;var n=/\?url\=([^\.]+)\./;function s(){var y=t.href;var x=r.exec(y)||n.exec(y);return x?x[1]:false}function u(z){var x=s();if(x!==false){var y=q(x,z);p(y)}}function p(z){var x="&ck="+[z,e,b,l,k,h,g,m].join(".");if(t.href){var y=t.href;if(y.indexOf("&ck=")==-1){t.href+=x}else{t.href=y.replace(/&ck=[\d.]*/,x)}}}function q(A,C){var B=0;for(var z=0;z<(((e*C)%99)+9);z++){var y=A.length<20?A.length:20;B+=A.charCodeAt((b*z)%A.length)}return B}function w(x){x=x||window.event;e++;if(h===undefined){h=x.clientX}if(g===undefined){g=x.clientY}o=new Date().getTime()}function f(y,x){y=y||window.event;t=y.target||y.srcElement;while(t&&t.tagName!="A"){t=t.parentNode}i=new Date().getTime();b=9999;l=y.clientX;k=y.clientY;if(o===0){m=0}else{m=i-o}u(x)}function j(y,x){d=new Date().getTime();b=d-i;u(x)}function c(C,z,B){var A,x,y;for(y in z){A=z[y];x=B[y];if(window.attachEvent){C.attachEvent("on"+A,x)}else{C.addEventListener(A,x,false)}}}function a(x){return[function(y){w(y)},function(y){f(y,x)},function(y){j(y,x)}]}v.ck=function(B,A){if(B.length===undefined){B=[B]}var x=B.length;var y=0;var z=a(A);for(;y<x;y++){c(B[y],["mouseover","mousedown","mouseup"],z)}}})(window.ecom.pl2);window.ecom.pl2.run(function(c){var e=c.q("mAixyI");for(var b=0;b<e.length;b++){var a=e[b];var d=a.getElementsByTagName("A");c.ck(d,window.ecom.pl2.imTimesign)}},false);</script></div>
+<a class="ic reader-fullScreen xllDownloadLayerHit_left top-right-fullScreen" href="javascript:;" title="全屏显示" data-toolsbar-log="fullscreen" alog-action="htmltoolbar.fullscreen"></a></div>
+<div id="shareWrap-3" style="display:none;">
+<div id="shareMore-3" class="reader-share reader-tools-share" style="display: block;">
+<dl>
+<dt>把文档贴到Blog、BBS或个人站等：</dt>
+<dd class="reder-code-box">
+<input id="readerCode-3" onclick="this.select()" class="reader-code">
+<a id="copyCode-3" href="javascript:void(0);" class="cp_btn logSend" data-logsend="{&quot;send&quot;:[&quot;view&quot;,&quot;share&quot;,{&quot;sns&quot;:&quot;web_player&quot;}]}">复制</a>
+<span id="copyResult-3"></span>
+<a id="viewReader-3" class="pre" href="javascript:void(0);">预览</a>
+</dd>
+<dd>
+<input id="normalSize-3" name="reader-share" type="radio" checked="true">
+<label for="normalSize-3">普通尺寸(450*500pix)</label>
+<input id="bigSize-3" class="big" name="reader-share" type="radio" value="">
+<label for="bigSize-3">较大尺寸(630*500pix)</label>
+</dd>
+</dl>
+</div>
+</div>
+</div>
 
 </div></body>
 
