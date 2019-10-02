@@ -1,0 +1,299 @@
+﻿object fMain: TfMain
+  Left = 0
+  Top = 0
+  Caption = #39029#38754#20462#25913#24037#20855
+  ClientHeight = 801
+  ClientWidth = 846
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Page1: TPageControl
+    Left = 0
+    Top = 41
+    Width = 846
+    Height = 741
+    ActivePage = ts0
+    Align = alClient
+    TabOrder = 0
+    object ts0: TTabSheet
+      Caption = #36828#31243#39029#38754
+      object Web1: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 838
+        Height = 713
+        Align = alClient
+        TabOrder = 0
+        OnNavigateComplete2 = Web1NavigateComplete2
+        OnDocumentComplete = Web1DocumentComplete
+        ExplicitLeft = 392
+        ExplicitTop = 344
+        ExplicitWidth = 300
+        ExplicitHeight = 150
+        ControlData = {
+          4C0000009C560000B14900000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
+    object ts1: TTabSheet
+      Caption = #27169#26495#39029#38754
+      ImageIndex = 1
+      object Web2: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 838
+        Height = 713
+        Align = alClient
+        TabOrder = 0
+        OnDocumentComplete = Web2DocumentComplete
+        ExplicitWidth = 300
+        ExplicitHeight = 150
+        ControlData = {
+          4C0000009C560000B14900000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
+    object ts2: TTabSheet
+      Caption = #36828#31243#20195#30721
+      ImageIndex = 2
+      object Memo1: TMemo
+        Left = 0
+        Top = 0
+        Width = 838
+        Height = 713
+        Align = alClient
+        Lines.Strings = (
+          'Memo1')
+        ScrollBars = ssBoth
+        TabOrder = 0
+      end
+    end
+    object ts3: TTabSheet
+      Caption = #27169#26495#20195#30721
+      ImageIndex = 3
+      object Memo2: TMemo
+        Left = 0
+        Top = 0
+        Width = 838
+        Height = 713
+        Align = alClient
+        Lines.Strings = (
+          '<!DOCTYPE html>'
+          '<html>'
+          ''
+          '<head>'
+          '  <meta charset="utf-8">'
+          
+            '  <meta name="viewport" content="width=device-width, initial-sca' +
+            'le=1.0">'
+          '  <title></title>'
+          '  <link rel="stylesheet" href="images/style.css" />'
+          '</head>'
+          ''
+          '<body class="stackedit"><div class="stackedit__html">'
+          ''
+          ''
+          '</div></body>'
+          ''
+          '</html>')
+        ScrollBars = ssBoth
+        TabOrder = 0
+      end
+    end
+    object ts4: TTabSheet
+      Caption = #25991#31456#20869#23481
+      ImageIndex = 4
+      object Memo3: TMemo
+        Left = 0
+        Top = 0
+        Width = 838
+        Height = 713
+        Align = alClient
+        ScrollBars = ssBoth
+        TabOrder = 0
+      end
+    end
+    object ts5: TTabSheet
+      Caption = #21512#25104#20869#23481
+      ImageIndex = 5
+      object Memo4: TMemo
+        Left = 0
+        Top = 0
+        Width = 838
+        Height = 713
+        Align = alClient
+        Lines.Strings = (
+          'Memo1')
+        ScrollBars = ssBoth
+        TabOrder = 0
+      end
+    end
+    object ts6: TTabSheet
+      Caption = #21512#25104#39029#38754
+      ImageIndex = 6
+      object Web3: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 838
+        Height = 713
+        Align = alClient
+        TabOrder = 0
+        OnNavigateComplete2 = Web1NavigateComplete2
+        OnDocumentComplete = Web3DocumentComplete
+        ExplicitLeft = 392
+        ExplicitTop = 344
+        ExplicitWidth = 300
+        ExplicitHeight = 150
+        ControlData = {
+          4C0000009C560000B14900000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
+    object 本地内容: TTabSheet
+      Caption = #26412#22320#20869#23481
+      ImageIndex = 7
+      object Memo5: TMemo
+        Left = 0
+        Top = 0
+        Width = 838
+        Height = 713
+        Align = alClient
+        Lines.Strings = (
+          'Memo1')
+        ScrollBars = ssBoth
+        TabOrder = 0
+      end
+    end
+    object ts8: TTabSheet
+      Caption = #26412#22320#39029#38754
+      ImageIndex = 8
+      object web4: TWebBrowser
+        Left = 0
+        Top = 0
+        Width = 838
+        Height = 713
+        Align = alClient
+        TabOrder = 0
+        OnNavigateComplete2 = Web1NavigateComplete2
+        OnDocumentComplete = web4DocumentComplete
+        ExplicitLeft = 392
+        ExplicitTop = 344
+        ExplicitWidth = 300
+        ExplicitHeight = 150
+        ControlData = {
+          4C0000009C560000B14900000000000000000000000000000000000000000000
+          000000004C000000000000000000000001000000E0D057007335CF11AE690800
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
+          8000000000000000000000000000000000000000000000000000000000000000
+          00000000000000000100000000000000000000000000000000000000}
+      end
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 846
+    Height = 41
+    Align = alTop
+    TabOrder = 1
+    object btnLoad: TButton
+      Left = 384
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = #21152#36733#39029#38754
+      TabOrder = 0
+      OnClick = btnLoadClick
+    end
+    object edtUrl: TEdit
+      Left = 8
+      Top = 8
+      Width = 360
+      Height = 21
+      TabOrder = 1
+      Text = 'https://blog.csdn.net/t_332741160/article/details/81408597'
+    end
+    object btnCopyContent: TButton
+      Left = 463
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = #25130#21462#25991#31456
+      TabOrder = 2
+      OnClick = btnCopyContentClick
+    end
+    object btnMerge: TButton
+      Left = 542
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = #21512#25104#20869#23481
+      TabOrder = 3
+      Visible = False
+      OnClick = btnMergeClick
+    end
+    object btnMerge2: TButton
+      Left = 543
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = #21512#25104#20869#23481
+      TabOrder = 4
+      OnClick = btnMerge2Click
+    end
+    object btnSaveas: TButton
+      Left = 622
+      Top = 8
+      Width = 75
+      Height = 25
+      Caption = #21478#23384#20026
+      TabOrder = 5
+      OnClick = btnSaveasClick
+    end
+    object btnSave: TButton
+      Left = 700
+      Top = 9
+      Width = 75
+      Height = 25
+      Caption = #20445#23384#26412#22320#39029#38754
+      TabOrder = 6
+      OnClick = btnSaveClick
+    end
+  end
+  object Bar1: TStatusBar
+    Left = 0
+    Top = 782
+    Width = 846
+    Height = 19
+    Panels = <
+      item
+        Width = 300
+      end
+      item
+        Width = 50
+      end>
+  end
+  object Save1: TSaveDialog
+    DefaultExt = '.htm'
+    Filter = #32593#39029#25991#20214'(*.htm)|*.htm'
+    Title = #20445#23384#21512#25104#39029#38754#21450#20854#22270#29255
+    Left = 416
+    Top = 408
+  end
+end

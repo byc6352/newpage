@@ -11,6 +11,7 @@
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -19,7 +20,7 @@
     Top = 41
     Width = 846
     Height = 741
-    ActivePage = ts0
+    ActivePage = ts6
     Align = alClient
     TabOrder = 0
     object ts0: TTabSheet
@@ -227,7 +228,7 @@
       Width = 360
       Height = 21
       TabOrder = 1
-      Text = 'https://blog.csdn.net/xixiyingyi/article/details/75434334'
+      Text = 'https://blog.csdn.net/t_332741160/article/details/81408597'
     end
     object btnCopyContent: TButton
       Left = 463

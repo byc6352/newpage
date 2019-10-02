@@ -56,8 +56,10 @@ type
     procedure web4DocumentComplete(ASender: TObject; const pDisp: IDispatch;
       const URL: OleVariant);
     procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
+    procedure AppException(Sender: TObject; E: Exception);
 
   public
     { Public declarations }
@@ -79,6 +81,13 @@ procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
 implementation
 
 {$R *.dfm}
+uses
+  uFuncs;
+procedure TfMain.AppException(Sender: TObject; E: Exception);
+begin
+
+  //Log(e.Message);
+end;
 //从内存中加载页面（比加载htm文件速度快）uses ActiveX;
 procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
 var
@@ -205,6 +214,13 @@ begin
   web4.Navigate(mPage);
 end;
 
+procedure TfMain.FormCreate(Sender: TObject);
+begin
+  Application.OnException := AppException;
+  //Set8087CW(Longword($133f));
+  IEEmulator(11001);
+end;
+
 procedure TfMain.FormShow(Sender: TObject);
 begin
   web2.Navigate(mModelPage);
@@ -216,8 +232,7 @@ procedure TfMain.Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;
 var
   doc:IHTMLDocument2;
 begin
-  //if bDocComplete then exit;
-  //bDocComplete:=true;
+  if(Web1.ReadyState<>READYSTATE_COMPLETE)then exit;
   doc:=web1.Document as IHTMLDocument2; //得到接口；
   memo1.Lines:=getpagecode(doc);
   mProtocol:=doc.protocol;

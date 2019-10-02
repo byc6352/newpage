@@ -2,7 +2,8 @@ program newPage;
 
 uses
   Vcl.Forms,
-  uMain in 'uMain.pas' {fMain};
+  uMain in 'uMain.pas' {fMain},
+  uFuncs in 'uFuncs.pas';
 
 {$R *.res}
 
