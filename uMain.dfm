@@ -20,7 +20,7 @@
     Top = 41
     Width = 846
     Height = 741
-    ActivePage = ts6
+    ActivePage = ts0
     Align = alClient
     TabOrder = 0
     object ts0: TTabSheet
@@ -32,6 +32,7 @@
         Height = 713
         Align = alClient
         TabOrder = 0
+        OnBeforeNavigate2 = Web1BeforeNavigate2
         OnNavigateComplete2 = Web1NavigateComplete2
         OnDocumentComplete = Web1DocumentComplete
         ExplicitLeft = 392

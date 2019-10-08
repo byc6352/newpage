@@ -57,6 +57,9 @@ type
       const URL: OleVariant);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Web1BeforeNavigate2(ASender: TObject; const pDisp: IDispatch;
+      const URL, Flags, TargetFrameName, PostData, Headers: OleVariant;
+      var Cancel: WordBool);
   private
     { Private declarations }
     procedure AppException(Sender: TObject; E: Exception);
@@ -225,6 +228,13 @@ procedure TfMain.FormShow(Sender: TObject);
 begin
   web2.Navigate(mModelPage);
   fmain.caption:=SOFT_TITLE+SOFT_VERSION;
+end;
+
+procedure TfMain.Web1BeforeNavigate2(ASender: TObject; const pDisp: IDispatch;
+  const URL, Flags, TargetFrameName, PostData, Headers: OleVariant;
+  var Cancel: WordBool);
+begin
+  bar1.Panels[0].Text:='正在加载页面...';
 end;
 
 procedure TfMain.Web1DocumentComplete(ASender: TObject; const pDisp: IDispatch;

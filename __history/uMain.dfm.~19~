@@ -11,6 +11,8 @@
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Page1: TPageControl
@@ -18,10 +20,10 @@
     Top = 41
     Width = 846
     Height = 741
-    ActivePage = TabSheet4
+    ActivePage = ts6
     Align = alClient
     TabOrder = 0
-    object ts1: TTabSheet
+    object ts0: TTabSheet
       Caption = #36828#31243#39029#38754
       object Web1: TWebBrowser
         Left = 0
@@ -44,7 +46,7 @@
           00000000000000000100000000000000000000000000000000000000}
       end
     end
-    object ts2: TTabSheet
+    object ts1: TTabSheet
       Caption = #27169#26495#39029#38754
       ImageIndex = 1
       object Web2: TWebBrowser
@@ -65,8 +67,8 @@
           00000000000000000100000000000000000000000000000000000000}
       end
     end
-    object ts3: TTabSheet
-      Caption = #28304#20195#30721'1'
+    object ts2: TTabSheet
+      Caption = #36828#31243#20195#30721
       ImageIndex = 2
       object Memo1: TMemo
         Left = 0
@@ -80,8 +82,8 @@
         TabOrder = 0
       end
     end
-    object ts4: TTabSheet
-      Caption = #28304#20195#30721'2'
+    object ts3: TTabSheet
+      Caption = #27169#26495#20195#30721
       ImageIndex = 3
       object Memo2: TMemo
         Left = 0
@@ -90,12 +92,29 @@
         Height = 713
         Align = alClient
         Lines.Strings = (
-          'Memo1')
+          '<!DOCTYPE html>'
+          '<html>'
+          ''
+          '<head>'
+          '  <meta charset="utf-8">'
+          
+            '  <meta name="viewport" content="width=device-width, initial-sca' +
+            'le=1.0">'
+          '  <title></title>'
+          '  <link rel="stylesheet" href="images/style.css" />'
+          '</head>'
+          ''
+          '<body class="stackedit"><div class="stackedit__html">'
+          ''
+          ''
+          '</div></body>'
+          ''
+          '</html>')
         ScrollBars = ssBoth
         TabOrder = 0
       end
     end
-    object TabSheet1: TTabSheet
+    object ts4: TTabSheet
       Caption = #25991#31456#20869#23481
       ImageIndex = 4
       object Memo3: TMemo
@@ -104,13 +123,11 @@
         Width = 838
         Height = 713
         Align = alClient
-        Lines.Strings = (
-          'Memo1')
         ScrollBars = ssBoth
         TabOrder = 0
       end
     end
-    object ts6: TTabSheet
+    object ts5: TTabSheet
       Caption = #21512#25104#20869#23481
       ImageIndex = 5
       object Memo4: TMemo
@@ -125,7 +142,7 @@
         TabOrder = 0
       end
     end
-    object TabSheet2: TTabSheet
+    object ts6: TTabSheet
       Caption = #21512#25104#39029#38754
       ImageIndex = 6
       object Web3: TWebBrowser
@@ -164,7 +181,7 @@
         TabOrder = 0
       end
     end
-    object TabSheet4: TTabSheet
+    object ts8: TTabSheet
       Caption = #26412#22320#39029#38754
       ImageIndex = 8
       object web4: TWebBrowser
@@ -211,7 +228,7 @@
       Width = 360
       Height = 21
       TabOrder = 1
-      Text = 'https://blog.csdn.net/u014543872/article/details/79568712'
+      Text = 'https://blog.csdn.net/t_332741160/article/details/81408597'
     end
     object btnCopyContent: TButton
       Left = 463
